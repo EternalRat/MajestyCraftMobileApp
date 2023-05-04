@@ -1,0 +1,13 @@
+{
+    "editor.indentSize": "tabSize",
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.configPath": "./capdrakeapp/.prettierrc.js",
+    "prettier.prettierPath": "./capdrakeapp/node_modules/prettier",
+
+}
