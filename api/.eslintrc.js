@@ -1,17 +1,10 @@
 module.exports = {
     root: true,
-    // extends: "@react-native-community",
     extends: ['eslint:recommended', 'plugin:prettier/recommended'],
     parser: '@typescript-eslint/parser',
-    plugins: [
-        'react',
-        '@typescript-eslint',
-        'unused-imports',
-        'simple-import-sort',
-    ],
+    plugins: ['@typescript-eslint', 'unused-imports', 'simple-import-sort'],
     ignorePatterns: ['.*rc.js', '**/*.config.js'],
     env: {
-        browser: true,
         node: true,
         es2021: true,
         jest: true,

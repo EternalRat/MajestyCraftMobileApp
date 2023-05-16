@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": "../capdrakeapp/"
+		},
+		{
+			"path": "../api/"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/coverage": true,
+			"**/index.android.bundle": true
+		},
+		"editor.tabSize": 4,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.formatOnPaste": true,
+		"editor.formatOnType": true,
+		"prettier.configPath": "../capdrakeapp/.prettierrc",
+		"prettier.prettierPath": "../capdrakeapp/node_modules/prettier/",
+		"vscord.app.name": "Visual Studio Code",
+		"terminal.external.osxExec": "iTerm.app",
+		"terminal.integrated.defaultProfile.osx": "zsh",
+		"[typescriptreact]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[jsonc]": {
+			"editor.defaultFormatter": "vscode.json-language-features"
+		},
+		"[json]": {
+			"editor.defaultFormatter": "vscode.json-language-features"
+		},
+		"[javascript]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"eslint.workingDirectories": [
+			"../capdrakeapp/",
+			"../api/"
+		],
+	}
+}

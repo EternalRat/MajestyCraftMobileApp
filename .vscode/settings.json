@@ -1,13 +1,25 @@
 {
-    "editor.indentSize": "tabSize",
-    "editor.detectIndentation": false,
-    "editor.insertSpaces": false,
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "editor.tabSize": 4,
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "prettier.configPath": "./capdrakeapp/.prettierrc.js",
-    "prettier.prettierPath": "./capdrakeapp/node_modules/prettier",
-
+	"editor.indentSize": "tabSize",
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"editor.formatOnPaste": true,
+	"editor.formatOnType": true,
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.configPath": "./capdrakeapp/.prettierrc.js",
+	"prettier.prettierPath": "./capdrakeapp/node_modules/prettier",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"vscord.app.name": "Visual Studio Code",
 }
