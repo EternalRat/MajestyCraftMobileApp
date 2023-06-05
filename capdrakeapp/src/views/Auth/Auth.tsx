@@ -1,9 +1,9 @@
 import { Text, TextInput, View } from 'react-native';
-import { Label } from '../domains/templating/texts/Label';
-import { LinkButton } from '../domains/templating/buttons/Link';
-import { Button } from '../domains/templating/buttons/Button';
+import { Label } from '../../domains/templating/texts/Label';
+import { LinkButton } from '../../domains/templating/buttons/Link';
+import { Button } from '../../domains/templating/buttons/Button';
 
-export const Login = () => {
+export const Auth = () => {
 	return (
 		<View style={{}}>
 			<View>
