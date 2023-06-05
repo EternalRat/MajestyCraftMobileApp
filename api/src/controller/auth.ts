@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 
 export namespace AuthController {
-    export const login = (req: Request, res: Response) => {
-        res.send('login');
-    };
+	export const login = (req: Request, res: Response) => {
+		res.send('login');
+	};
 
-    export const register = (req: Request, res: Response) => {
-        res.send('register');
-    };
+	export const register = (req: Request, res: Response) => {
+		res.send('register');
+	};
 
-    export const logout = (req: Request, res: Response) => {
-        res.send('logout');
-    };
+	export const logout = (req: Request, res: Response) => {
+		res.send('logout');
+	};
 }
