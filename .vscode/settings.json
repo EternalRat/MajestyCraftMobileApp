@@ -7,7 +7,7 @@
 	"editor.formatOnType": true,
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"prettier.configPath": "./capdrakeapp/.prettierrc.js",
+	"prettier.configPath": "./capdrakeapp/.prettierrc",
 	"prettier.prettierPath": "./capdrakeapp/node_modules/prettier",
 	"[typescript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
