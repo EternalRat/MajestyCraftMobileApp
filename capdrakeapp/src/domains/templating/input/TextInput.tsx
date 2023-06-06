@@ -1,4 +1,5 @@
 import NativeImage from '@chouicgames/react-native-images-to-native-images';
+import { File } from '@chouicgames/react-native-images-to-native-images/src/types';
 import {
 	NativeSyntheticEvent,
 	StyleProp,
@@ -8,7 +9,6 @@ import {
 	TextStyle,
 	View,
 } from 'react-native';
-import { File } from '@chouicgames/react-native-images-to-native-images/src/types';
 
 interface Props {
 	value: string;

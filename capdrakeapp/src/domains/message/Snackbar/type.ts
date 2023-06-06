@@ -1,25 +1,25 @@
-import { MessageType, IconType } from '../types'
+import { IconType, MessageType } from '../types';
 
 export enum DisplayMode {
-  BACKGROUND_COLOR,
-  TEXT_COLOR,
+	BACKGROUND_COLOR,
+	TEXT_COLOR,
 }
 
 export interface SnackBarProps {
-  isVisible: boolean
-  onPress?: () => void
-  text: string
-  type: MessageType
-  mode: DisplayMode
-  colorStyle?: MessageType
-  iconBefore?: IconType
-  iconAfter?: IconType
+	isVisible: boolean;
+	onPress?: () => void;
+	text: string;
+	type: MessageType;
+	mode: DisplayMode;
+	colorStyle?: MessageType;
+	iconBefore?: IconType;
+	iconAfter?: IconType;
 }
 
 export enum SnackbarDisplayMode {
-  LEFT,
-  CENTER,
-  RIGHT,
+	LEFT,
+	CENTER,
+	RIGHT,
 }
 
-export type ContentMode = 'background' | 'text'
+export type ContentMode = 'background' | 'text';

@@ -23,6 +23,8 @@ module.exports = {
 	},
 	globals: {
 		NodeJS: true,
+		React: true,
+		JSX: true,
 	},
 	rules: {
 		'no-console': ['error', { allow: ['warn', 'error', 'info', 'table'] }],
