@@ -5,4 +5,6 @@ export enum Color {
 	SUCCESS = 'palegreen',
 	ERROR = '#ff8c8c',
 	ORANGE = '#FF8300',
+	GREY = '#e9ecef',
+	BORDER = '#ced4da',
 }

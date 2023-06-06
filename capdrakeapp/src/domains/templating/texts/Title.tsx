@@ -5,12 +5,14 @@ interface Props {
 	style?: StyleProp<TextStyle>;
 }
 
-export const Label = ({ children, style }: Props) => {
+export const Title = ({ children, style }: Props) => {
 	return <Text style={[style, styles.label]}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
 	label: {
-		fontSize: 14,
+		fontSize: 18,
+		fontWeight: 'bold',
+		fontStyle: 'normal',
 	},
 });

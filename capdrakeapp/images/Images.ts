@@ -5,7 +5,7 @@ import {
 
 import { Files, FilesInfos } from './ImagesTypes';
 
-export const appName: string = 'cupdrakeapp'; // <------ change to your app name (in YourProject/ios/YourAppName)
+export const appName: string = 'capdrake'; // <------ change to your app name (in YourProject/ios/YourAppName)
 
 export const Images: FilesInfos = {
 	[Files.key]: {
@@ -17,6 +17,12 @@ export const Images: FilesInfos = {
 	[Files.user]: {
 		path: './files/user.svg',
 		source: { uri: 'user' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
+	[Files.back]: {
+		path: './files/back.svg',
+		source: { uri: 'back' },
 		android: { type: AndroidFileType.Vector },
 		ios: { type: IosFileType.Pdf },
 	},

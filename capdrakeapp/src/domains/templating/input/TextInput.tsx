@@ -10,19 +10,52 @@ import {
 	View,
 } from 'react-native';
 
+import { Color } from '../style';
+
 interface Props {
 	value: string;
 	style?: StyleProp<TextStyle>;
+	imageStyle?: any;
 	updateText: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 	icon: File;
 }
 
-export const Input = ({ value, style, updateText, icon }: Props) => {
+export const Input = ({
+	value,
+	style,
+	imageStyle,
+	updateText,
+	icon,
+}: Props) => {
 	return (
-		<View>
-			<NativeImage file={icon} />
+		<View
+			style={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'center',
+				width: '100%',
+				paddingTop: 5,
+			}}>
+			<View
+				style={{
+					width: 30,
+					height: 40,
+					backgroundColor: Color.GREY,
+					display: 'flex',
+					alignItems: 'center',
+				}}>
+				<NativeImage
+					file={icon}
+					style={{
+						width: 18,
+						height: '100%',
+						resizeMode: 'contain',
+						...imageStyle,
+					}}
+				/>
+			</View>
 			<TextInput
-				style={[style, styles.label]}
+				style={[style, styles.input]}
 				value={value}
 				onChange={updateText}
 			/>
@@ -31,7 +64,12 @@ export const Input = ({ value, style, updateText, icon }: Props) => {
 };
 
 const styles = StyleSheet.create({
-	label: {
+	input: {
 		fontSize: 14,
+		borderColor: Color.BORDER,
+		borderWidth: 1,
+		width: 320,
+		height: 39.5,
+		left: -1,
 	},
 });

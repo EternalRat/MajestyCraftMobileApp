@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from './useAuth';
 
 export const Auth = () => {
-	const { authView } = useAuth();
+	const { AuthView, setView } = useAuth();
 
-	return <>{authView}</>;
+	return <AuthView setView={setView} />;
 };

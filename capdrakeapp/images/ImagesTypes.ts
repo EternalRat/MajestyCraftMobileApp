@@ -3,6 +3,7 @@ import { File } from '@chouicgames/react-native-images-to-native-images/src/type
 export enum Files {
 	key,
 	user,
+	back,
 }
 
 export type FilesInfos = {
