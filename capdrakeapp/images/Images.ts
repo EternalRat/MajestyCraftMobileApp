@@ -26,6 +26,12 @@ export const Images: FilesInfos = {
 		android: { type: AndroidFileType.Vector },
 		ios: { type: IosFileType.Pdf },
 	},
+	[Files.email]: {
+		path: './files/email.svg',
+		source: { uri: 'email' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
 };
 
 export default Images;

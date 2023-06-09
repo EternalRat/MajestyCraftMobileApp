@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Button } from '../../domains/templating/buttons/Button';
-import { Color } from '../../domains/templating/style';
+import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
 import { Account } from './Login/Account';
 import { Redirect } from './Login/Redirect';
@@ -22,7 +22,7 @@ export const Login = ({ setView }: Props) => {
 	const [test, setTest] = useState(false);
 	const { height } = useWindowDimensions();
 
-	const viewOffsetY = useSharedValue(height);
+	const viewOffsetY = useSharedValue(-400);
 	const offsetAnimation = useAnimatedStyle(() => {
 		return {
 			transform: [
@@ -71,10 +71,14 @@ export const Login = ({ setView }: Props) => {
 					<Title style={{ color: Color.WHITE }}>Connexion</Title>
 				</View>
 				<Account />
-				<Redirect setView={setView} />
+				<Redirect
+					setView={setView}
+					viewOffsetY={viewOffsetY}
+					height={height}
+				/>
 				<View
 					style={{
-						width: 350,
+						width: CONTAINER_WIDTH,
 						display: 'flex',
 						flexDirection: 'column',
 						alignSelf: 'center',
@@ -98,7 +102,7 @@ export const Login = ({ setView }: Props) => {
 				</View>
 				<View
 					style={{
-						width: 350,
+						width: CONTAINER_WIDTH,
 						paddingTop: 16,
 						display: 'flex',
 						flexDirection: 'column',

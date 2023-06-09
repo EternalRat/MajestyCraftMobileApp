@@ -10,7 +10,7 @@ import {
 	View,
 } from 'react-native';
 
-import { Color } from '../style';
+import { Color, CONTAINER_WIDTH } from '../style';
 
 interface Props {
 	value: string;
@@ -68,8 +68,9 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		borderColor: Color.BORDER,
 		borderWidth: 1,
-		width: 320,
+		width: CONTAINER_WIDTH - 30,
 		height: 39.5,
+		paddingLeft: 8,
 		left: -1,
 	},
 });

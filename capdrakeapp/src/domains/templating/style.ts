@@ -8,3 +8,5 @@ export enum Color {
 	GREY = '#e9ecef',
 	BORDER = '#ced4da',
 }
+
+export const CONTAINER_WIDTH = 330;

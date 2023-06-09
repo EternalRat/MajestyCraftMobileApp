@@ -4,6 +4,7 @@ export enum Files {
 	key,
 	user,
 	back,
+	email,
 }
 
 export type FilesInfos = {

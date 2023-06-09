@@ -10,9 +10,9 @@ import Animated, {
 import Images from '../../../images/Images';
 import { Files } from '../../../images/ImagesTypes';
 import { Button } from '../../domains/templating/buttons/Button';
-import { Color } from '../../domains/templating/style';
+import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
-import { Account } from './Login/Account';
+import { RegisterFields } from './Login/RegisterFields';
 import { AuthViewEnum } from './useAuth';
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
 export const Register = ({ setView }: Props) => {
 	const { height } = useWindowDimensions();
 
-	const viewOffsetY = useSharedValue(height);
+	const viewOffsetY = useSharedValue(-500);
 	const offsetAnimation = useAnimatedStyle(() => {
 		return {
 			transform: [
@@ -70,7 +70,16 @@ export const Register = ({ setView }: Props) => {
 						zIndex: 100,
 					}}>
 					<TouchableOpacity
-						onPress={() => setView(AuthViewEnum.LOGIN)}>
+						onPress={() => {
+							viewOffsetY.value = withSpring(-500, {
+								mass: 2,
+								stiffness: 120,
+								damping: 40,
+							});
+							setTimeout(() => {
+								setView(AuthViewEnum.LOGIN);
+							}, 700);
+						}}>
 						<View>
 							<NativeImage
 								file={Images[Files.back]}
@@ -94,10 +103,10 @@ export const Register = ({ setView }: Props) => {
 					}}>
 					<Title style={{ color: Color.WHITE }}>Inscription</Title>
 				</View>
-				<Account />
+				<RegisterFields />
 				<View
 					style={{
-						width: 350,
+						width: CONTAINER_WIDTH,
 						paddingTop: 16,
 						display: 'flex',
 						flexDirection: 'column',
