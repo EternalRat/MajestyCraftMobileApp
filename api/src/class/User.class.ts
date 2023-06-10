@@ -2,6 +2,7 @@ export class User {
 	private _id: string;
 	private _pseudo: string;
 	private _password: string;
+	private _email: string;
 
 	constructor(pseudo: string, password: string) {
 		this._pseudo = pseudo;

@@ -42,86 +42,85 @@ export const Login = ({ setView }: Props) => {
 	}, []);
 
 	return (
-		<Animated.View
-			style={[
-				{
-					backgroundColor: '#fff',
-					height: '100%',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-				},
-				offsetAnimation,
-			]}>
-			<View
-				style={{
-					backgroundColor: Color.WHITE,
-					height: '100%',
-					width: '100%',
-					paddingBottom: 10,
-				}}>
-				<View
-					style={{
-						height: 60,
-						backgroundColor: Color.ORANGE,
+		<View
+			style={{
+				backgroundColor: '#191919',
+			}}>
+			<Animated.View
+				style={[
+					{
+						height: '100%',
 						display: 'flex',
 						alignItems: 'center',
 						justifyContent: 'center',
-					}}>
-					<Title style={{ color: Color.WHITE }}>Connexion</Title>
-				</View>
-				<Account />
-				<Redirect
-					setView={setView}
-					viewOffsetY={viewOffsetY}
-					height={height}
-				/>
+					},
+					offsetAnimation,
+				]}>
 				<View
 					style={{
-						width: CONTAINER_WIDTH,
-						display: 'flex',
-						flexDirection: 'column',
-						alignSelf: 'center',
-						paddingTop: 16,
+						height: '100%',
+						width: '100%',
+						paddingBottom: 10,
 					}}>
-					<BouncyCheckbox
-						isChecked={test}
-						text='Se souvenir de moi'
-						onPress={() => {
-							setTest(!test);
-						}}
-						fillColor={Color.ORANGE}
-						disableText={false}
-						disableBuiltInState
-						textStyle={{
-							color: Color.BLACK,
-							fontSize: 14,
-							textDecorationLine: 'none',
-						}}
-					/>
-				</View>
-				<View
-					style={{
-						width: CONTAINER_WIDTH,
-						paddingTop: 16,
-						display: 'flex',
-						flexDirection: 'column',
-						alignSelf: 'center',
-					}}>
-					<Button
+					<View
 						style={{
-							width: '100%',
+							height: 60,
 							backgroundColor: Color.ORANGE,
-							height: 40,
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
-						}}
-						onClick={() => {}}>
-						Se connecter
-					</Button>
+						}}>
+						<Title style={{ color: Color.WHITE }}>Connexion</Title>
+					</View>
+					<Account />
+					<Redirect setView={setView} viewOffsetY={viewOffsetY} />
+					<View
+						style={{
+							width: CONTAINER_WIDTH,
+							display: 'flex',
+							flexDirection: 'column',
+							alignSelf: 'center',
+							paddingTop: 16,
+						}}>
+						<BouncyCheckbox
+							isChecked={test}
+							text='Se souvenir de moi'
+							onPress={() => {
+								setTest(!test);
+							}}
+							fillColor={Color.ORANGE}
+							disableText={false}
+							disableBuiltInState
+							textStyle={{
+								color: Color.WHITE,
+								fontSize: 14,
+								textDecorationLine: 'none',
+							}}
+						/>
+					</View>
+					<View
+						style={{
+							width: CONTAINER_WIDTH,
+							paddingTop: 16,
+							display: 'flex',
+							flexDirection: 'column',
+							alignSelf: 'center',
+						}}>
+						<Button
+							style={{
+								width: '100%',
+								backgroundColor: Color.ORANGE,
+								height: 40,
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}
+							onClick={() => {}}>
+							Se connecter
+						</Button>
+					</View>
 				</View>
-			</View>
-		</Animated.View>
+			</Animated.View>
+		</View>
 	);
 };

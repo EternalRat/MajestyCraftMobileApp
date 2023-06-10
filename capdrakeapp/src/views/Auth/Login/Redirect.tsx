@@ -8,10 +8,9 @@ import { AuthViewEnum } from '../useAuth';
 interface Props {
 	setView: (view: AuthViewEnum) => void;
 	viewOffsetY: SharedValue<number>;
-	height: number;
 }
 
-export const Redirect = ({ setView, viewOffsetY, height }: Props) => {
+export const Redirect = ({ setView, viewOffsetY }: Props) => {
 	return (
 		<View
 			style={{
@@ -25,7 +24,7 @@ export const Redirect = ({ setView, viewOffsetY, height }: Props) => {
 			<View>
 				<LinkButton
 					style={{
-						color: Color.BLACK,
+						color: Color.WHITE,
 					}}
 					onClick={() => {
 						viewOffsetY.value = withSpring(-375, {
@@ -43,7 +42,7 @@ export const Redirect = ({ setView, viewOffsetY, height }: Props) => {
 			<View>
 				<LinkButton
 					style={{
-						color: Color.BLACK,
+						color: Color.WHITE,
 					}}
 					onClick={() => {
 						viewOffsetY.value = withSpring(-400, {

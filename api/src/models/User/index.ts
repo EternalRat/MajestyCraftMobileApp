@@ -1,3 +1,4 @@
+import { genSalt, hash } from 'bcrypt';
 import { DataTypes } from 'sequelize';
 
 import { Database } from '~/class/Database.class';
@@ -18,4 +19,16 @@ export const User = sequelize.define('cmw_users', {
 		type: DataTypes.STRING,
 		allowNull: false,
 	},
+});
+
+User.beforeCreate(async user => {
+	const salt = await genSalt(10);
+	const hashedPassword = await hash(user.get('password') as string, salt);
+	user.set('password', hashedPassword);
+});
+
+User.beforeUpdate(async user => {
+	const salt = await genSalt(10);
+	const hashedPassword = await hash(user.get('password') as string, salt);
+	user.set('password', hashedPassword);
 });

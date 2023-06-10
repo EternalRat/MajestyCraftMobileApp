@@ -22,12 +22,12 @@ export const Account = () => {
 					display: 'flex',
 					flexDirection: 'column',
 				}}>
-				<Label style={{ color: Color.BLACK }}>Pseudo</Label>
+				<Label style={{ color: Color.WHITE }}>Pseudo</Label>
 				<Input
 					value={'rr'}
 					updateText={e => {}}
 					icon={Images[Files.user]}
-					style={{ color: Color.BLACK }}
+					style={{ color: Color.WHITE }}
 				/>
 			</View>
 			<View
@@ -35,13 +35,13 @@ export const Account = () => {
 					display: 'flex',
 					flexDirection: 'column',
 				}}>
-				<Label style={{ color: Color.BLACK }}>Mot de passe</Label>
+				<Label style={{ color: Color.WHITE }}>Mot de passe</Label>
 				<Input
 					value={'rr'}
 					updateText={e => {}}
 					icon={Images[Files.key]}
 					imageStyle={{ transform: [{ rotate: '45deg' }] }}
-					style={{ color: Color.BLACK }}
+					style={{ color: Color.WHITE }}
 				/>
 			</View>
 		</View>
