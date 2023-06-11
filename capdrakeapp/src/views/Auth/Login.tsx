@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Animated, {
 	useAnimatedStyle,
@@ -20,7 +20,6 @@ interface Props {
 
 export const Login = ({ setView }: Props) => {
 	const [test, setTest] = useState(false);
-	const { height } = useWindowDimensions();
 
 	const viewOffsetY = useSharedValue(-400);
 	const offsetAnimation = useAnimatedStyle(() => {

@@ -14,7 +14,7 @@ const configReducer: ErrorReducer = {
 		action: Action
 	): MessageState => {
 		return {
-			message: `Code error: ${(action as AddPayloadAction).code}`,
+			message: `Code erreur: ${(action as AddPayloadAction).code}`,
 			type: MessageType.ERROR,
 			duration: (action as unknown as AddPayloadAction).duration || 0,
 			iconAfter: (action as AddPayloadAction).iconAfter,

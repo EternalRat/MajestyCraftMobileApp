@@ -1,39 +1,50 @@
+import { Model } from 'sequelize';
 import { User } from '../../models';
 
 class UserModel {
-	public async createUser(
+	public static async createUser(
 		username: string,
 		email: string,
 		password: string
-	): Promise<any> {
-		try {
-			const newUser = await User.create({
-				username,
-				email,
-				password,
-			});
-			return newUser;
-		} catch (error) {
-			// Handle error
-		}
+	): Promise<Model<any, any> | null> {
+		const newUser = await User.create({
+			username,
+			email,
+			password,
+		});
+		return newUser;
 	}
 
-	public async updateUserPassword(
-		userId: number,
+	public static async updateUserPassword(
+		userId: string,
 		newPassword: string
-	): Promise<any> {
-		try {
-			const userToUpdate = await User.findOne({
-				where: { id: userId },
-			});
-			if (userToUpdate) {
-				userToUpdate.set('password', newPassword);
-				await userToUpdate.save();
-				return userToUpdate;
-			}
-		} catch (error) {
-			// Handle error
+	): Promise<Model<any, any> | null> {
+		const userToUpdate = await User.findOne({
+			where: { id: userId },
+		});
+		if (userToUpdate) {
+			userToUpdate.set('password', newPassword);
+			await userToUpdate.save();
 		}
+		return userToUpdate;
+	}
+
+	public static async getUser(
+		userId: string
+	): Promise<Model<any, any> | null> {
+		const user = await User.findOne({
+			where: { id: userId },
+		});
+		return user;
+	}
+
+	public static async getUserByUsername(
+		username: string
+	): Promise<Model<any, any> | null> {
+		const user = await User.findOne({
+			where: { username },
+		});
+		return user;
 	}
 }
 
