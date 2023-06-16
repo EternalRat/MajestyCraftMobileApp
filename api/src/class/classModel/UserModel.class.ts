@@ -1,4 +1,5 @@
 import { Model } from 'sequelize';
+
 import { User } from '../../models';
 
 class UserModel {
@@ -8,7 +9,7 @@ class UserModel {
 		password: string
 	): Promise<Model<any, any> | null> {
 		const newUser = await User.create({
-			username,
+			pseudo: username,
 			email,
 			password,
 		});
@@ -42,7 +43,7 @@ class UserModel {
 		username: string
 	): Promise<Model<any, any> | null> {
 		const user = await User.findOne({
-			where: { username },
+			where: { pseudo: username },
 		});
 		return user;
 	}

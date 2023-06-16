@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Animated, {
@@ -7,19 +7,23 @@ import Animated, {
 	withSpring,
 } from 'react-native-reanimated';
 
+import { AuthContext } from '../../domains/auth/Context';
+import { AuthStore } from '../../domains/auth/types';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
 import { Account } from './Login/Account';
 import { Redirect } from './Login/Redirect';
-import { AuthViewEnum } from './useAuth';
+import { ItemProps } from './useAuth';
 
-interface Props {
-	setView: (view: AuthViewEnum) => void;
-}
-
-export const Login = ({ setView }: Props) => {
+export const Login = ({
+	setView,
+	fields,
+	setPassword,
+	setUsername,
+}: ItemProps) => {
 	const [test, setTest] = useState(false);
+	const { login } = useContext<AuthStore>(AuthContext);
 
 	const viewOffsetY = useSharedValue(-400);
 	const offsetAnimation = useAnimatedStyle(() => {
@@ -71,7 +75,11 @@ export const Login = ({ setView }: Props) => {
 						}}>
 						<Title style={{ color: Color.WHITE }}>Connexion</Title>
 					</View>
-					<Account />
+					<Account
+						fields={fields}
+						setUsername={setUsername}
+						setPassword={setPassword}
+					/>
 					<Redirect setView={setView} viewOffsetY={viewOffsetY} />
 					<View
 						style={{
@@ -114,7 +122,9 @@ export const Login = ({ setView }: Props) => {
 								alignItems: 'center',
 								justifyContent: 'center',
 							}}
-							onClick={() => {}}>
+							onClick={() =>
+								login(fields.username, fields.password)
+							}>
 							Se connecter
 						</Button>
 					</View>

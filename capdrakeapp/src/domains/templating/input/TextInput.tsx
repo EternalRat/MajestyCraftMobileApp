@@ -18,6 +18,37 @@ interface Props {
 	imageStyle?: any;
 	updateText: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 	icon: File;
+	type?:
+		| 'none'
+		| 'URL'
+		| 'addressCity'
+		| 'addressCityAndState'
+		| 'addressState'
+		| 'countryName'
+		| 'creditCardNumber'
+		| 'emailAddress'
+		| 'familyName'
+		| 'fullStreetAddress'
+		| 'givenName'
+		| 'jobTitle'
+		| 'location'
+		| 'middleName'
+		| 'name'
+		| 'namePrefix'
+		| 'nameSuffix'
+		| 'nickname'
+		| 'organizationName'
+		| 'postalCode'
+		| 'streetAddressLine1'
+		| 'streetAddressLine2'
+		| 'sublocality'
+		| 'telephoneNumber'
+		| 'username'
+		| 'password'
+		| 'newPassword'
+		| 'oneTimeCode'
+		| undefined;
+	secured?: boolean;
 }
 
 export const Input = ({
@@ -26,6 +57,8 @@ export const Input = ({
 	imageStyle,
 	updateText,
 	icon,
+	type = 'none',
+	secured = false,
 }: Props) => {
 	return (
 		<View
@@ -43,6 +76,7 @@ export const Input = ({
 					backgroundColor: Color.GREY,
 					display: 'flex',
 					alignItems: 'center',
+					justifyContent: 'center',
 				}}>
 				<NativeImage
 					file={icon}
@@ -50,14 +84,17 @@ export const Input = ({
 						width: 18,
 						height: '100%',
 						resizeMode: 'contain',
+						tintColor: Color.BLACK,
 						...imageStyle,
 					}}
 				/>
 			</View>
 			<TextInput
+				textContentType={type}
 				style={[style, styles.input]}
 				value={value}
 				onChange={updateText}
+				secureTextEntry={secured}
 			/>
 		</View>
 	);

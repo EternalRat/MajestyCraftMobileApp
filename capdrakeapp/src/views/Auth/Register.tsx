@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
@@ -6,18 +6,32 @@ import Animated, {
 	withSpring,
 } from 'react-native-reanimated';
 
+import { AuthContext } from '../../domains/auth/Context';
+import { AuthStore } from '../../domains/auth/types';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
 import { Back } from './components/Back';
 import { RegisterFields } from './Login/RegisterFields';
-import { AuthViewEnum } from './useAuth';
+import { AuthFields, AuthViewEnum } from './useAuth';
 
 interface Props {
 	setView: (view: AuthViewEnum) => void;
+	fields: AuthFields;
+	setEmail: (email: string) => void;
+	setPassword: (password: string) => void;
+	setUsername: (username: string) => void;
 }
 
-export const Register = ({ setView }: Props) => {
+export const Register = ({
+	setView,
+	fields,
+	setEmail,
+	setPassword,
+	setUsername,
+}: Props) => {
+	const { register } = useContext<AuthStore>(AuthContext);
+
 	const viewOffsetY = useSharedValue(-500);
 	const offsetAnimation = useAnimatedStyle(() => {
 		return {
@@ -82,7 +96,12 @@ export const Register = ({ setView }: Props) => {
 							Inscription
 						</Title>
 					</View>
-					<RegisterFields />
+					<RegisterFields
+						fields={fields}
+						setEmail={setEmail}
+						setUsername={setUsername}
+						setPassword={setPassword}
+					/>
 					<View
 						style={{
 							width: CONTAINER_WIDTH,
@@ -100,7 +119,14 @@ export const Register = ({ setView }: Props) => {
 								alignItems: 'center',
 								justifyContent: 'center',
 							}}
-							onClick={() => {}}>
+							onClick={async () =>
+								await register(
+									fields.username,
+									fields.email,
+									fields.password,
+									true
+								)
+							}>
 							S'enregistrer
 						</Button>
 					</View>

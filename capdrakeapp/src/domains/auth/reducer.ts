@@ -8,7 +8,6 @@ import {
 
 const configReducer: AuthReducer = {
 	[ActionTypeAuth.LOGIN]: (state: Auth, action: Action) => {
-		localStorage.setItem('token', (action as LoginPayloadAction).token);
 		return {
 			username: (action as LoginPayloadAction).username,
 			token: (action as LoginPayloadAction).token,
@@ -18,7 +17,6 @@ const configReducer: AuthReducer = {
 		};
 	},
 	[ActionTypeAuth.LOGOUT]: (_state: Auth) => {
-		localStorage.removeItem('token');
 		return {
 			username: '',
 			token: '',

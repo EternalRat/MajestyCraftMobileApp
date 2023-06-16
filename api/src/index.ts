@@ -4,7 +4,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Express, NextFunction, Request, Response } from 'express';
 
+import { Database } from './class/Database.class';
 import api from './routes';
+import { sync } from './utils/sync.db';
 dotenv.config();
 
 const app: Express = express();
@@ -26,5 +28,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.listen(port, () => {
+	Database.getInstance();
+	sync();
 	console.info(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

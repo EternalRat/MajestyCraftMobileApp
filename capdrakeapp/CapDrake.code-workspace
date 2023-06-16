@@ -38,5 +38,6 @@
 			"../capdrakeapp/",
 			"../api/"
 		],
+		"svg.preview.background": "transparent",
 	}
 }

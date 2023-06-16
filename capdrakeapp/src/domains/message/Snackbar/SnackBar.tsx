@@ -55,14 +55,14 @@ export const SnackBar = ({
 			return;
 		}
 		if (isVisible) {
-			topValue.value = withSpring(FINAL_TOP_ERROR, {
+			topValue.value = withSpring(BASE_TOP_ERROR, {
 				mass: 1,
 				stiffness: 320,
 				damping: 40,
 			});
 		} else {
-			if (topValue.value !== BASE_TOP_ERROR) {
-				topValue.value = withSpring(BASE_TOP_ERROR, {
+			if (topValue.value !== FINAL_TOP_ERROR) {
+				topValue.value = withSpring(FINAL_TOP_ERROR, {
 					mass: 1,
 					stiffness: 320,
 					damping: 40,
@@ -71,7 +71,7 @@ export const SnackBar = ({
 		}
 	}, [isVisible]);
 
-	return isVisible ? (
+	return (
 		<GestureHandlerRootView>
 			<Animated.View style={[styles.container, snackAnimation]}>
 				<TouchableOpacity
@@ -122,8 +122,6 @@ export const SnackBar = ({
 				</TouchableOpacity>
 			</Animated.View>
 		</GestureHandlerRootView>
-	) : (
-		<></>
 	);
 };
 
@@ -132,6 +130,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		left: 0,
 		right: 0,
+		zIndex: 100,
 	},
 	snackbar: {
 		maxWidth: 350,

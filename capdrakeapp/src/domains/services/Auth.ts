@@ -2,14 +2,14 @@ import axiosInstance from '../config/Axios';
 
 export namespace AuthService {
 	export const login = (username: string, password: string) => {
-		return axiosInstance.post('/v1/auth/login', {
+		return axiosInstance.post('/auth/login', {
 			username,
 			password,
 		});
 	};
 
 	export const logout = () => {
-		return axiosInstance.post('/v1/auth/logout');
+		return axiosInstance.post('/auth/logout');
 	};
 
 	export const register = (
@@ -17,7 +17,7 @@ export namespace AuthService {
 		email: string,
 		password: string
 	) => {
-		return axiosInstance.post('/v1/auth/register', {
+		return axiosInstance.post('/auth/register', {
 			username,
 			email,
 			password,
@@ -25,7 +25,7 @@ export namespace AuthService {
 	};
 
 	export const healthAuth = (token: string) => {
-		return axiosInstance.get('/v1/auth/health', {
+		return axiosInstance.get('/auth/health', {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

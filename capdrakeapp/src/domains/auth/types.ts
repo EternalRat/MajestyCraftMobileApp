@@ -1,3 +1,5 @@
+import { Dispatch } from 'react';
+
 import { ReducerType } from '../reducer';
 
 export interface Auth {
@@ -10,6 +12,7 @@ export interface Auth {
 
 export interface AuthStore {
 	authStore: Auth;
+	dispatch: Dispatch<Action>;
 	login: (username: string, password: string) => Promise<void>;
 	logout: () => Promise<void>;
 	register: (

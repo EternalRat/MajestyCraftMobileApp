@@ -1,7 +1,7 @@
 import { genSalt, hash } from 'bcrypt';
 import { DataTypes } from 'sequelize';
 
-import { Database } from '~/class/Database.class';
+import { Database } from '../../class/Database.class';
 
 const sequelize = Database.getInstance().mysqlConnection;
 

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View } from 'react-native';
 
 import Images from '../../../../images/Images';
@@ -5,8 +6,22 @@ import { Files } from '../../../../images/ImagesTypes';
 import { Input } from '../../../domains/templating/input/TextInput';
 import { Color, CONTAINER_WIDTH } from '../../../domains/templating/style';
 import { Label } from '../../../domains/templating/texts/Label';
+import { AuthFields } from '../useAuth';
 
-export const RegisterFields = () => {
+interface Props {
+	fields: AuthFields;
+	setEmail: (email: string) => void;
+	setPassword: (password: string) => void;
+	setUsername: (username: string) => void;
+}
+
+export const RegisterFields = ({
+	fields,
+	setEmail,
+	setPassword,
+	setUsername,
+}: Props) => {
+	const [confirmedPass, setConfirmPassword] = useState<string>('');
 	return (
 		<View
 			style={{
@@ -24,10 +39,11 @@ export const RegisterFields = () => {
 				}}>
 				<Label style={{ color: Color.WHITE }}>Pseudo</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={fields.username}
+					updateText={e => setUsername(e.nativeEvent.text)}
 					icon={Images[Files.user]}
 					style={{ color: Color.WHITE }}
+					type='username'
 				/>
 			</View>
 			<View
@@ -37,11 +53,13 @@ export const RegisterFields = () => {
 				}}>
 				<Label style={{ color: Color.WHITE }}>Mot de passe</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={fields.password}
+					updateText={e => setPassword(e.nativeEvent.text)}
 					icon={Images[Files.key]}
 					imageStyle={{ transform: [{ rotate: '45deg' }] }}
 					style={{ color: Color.WHITE }}
+					secured
+					type='password'
 				/>
 			</View>
 			<View
@@ -53,11 +71,12 @@ export const RegisterFields = () => {
 					Confirmation du mot de passe
 				</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={confirmedPass}
+					updateText={e => setConfirmPassword(e.nativeEvent.text)}
 					icon={Images[Files.key]}
 					imageStyle={{ transform: [{ rotate: '45deg' }] }}
 					style={{ color: Color.WHITE }}
+					secured
 				/>
 			</View>
 			<View
@@ -67,10 +86,11 @@ export const RegisterFields = () => {
 				}}>
 				<Label style={{ color: Color.WHITE }}>Email</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={fields.email}
+					updateText={e => setEmail(e.nativeEvent.text)}
 					icon={Images[Files.email]}
 					style={{ color: Color.WHITE }}
+					type='emailAddress'
 				/>
 			</View>
 		</View>

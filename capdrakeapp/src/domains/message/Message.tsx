@@ -28,7 +28,7 @@ export const Message = () => {
 
 	return (
 		<SnackBar
-			isVisible={message.message !== ''}
+			isVisible={message.message.length > 0}
 			text={message.message}
 			type={message.type}
 			iconAfter={message.iconAfter}

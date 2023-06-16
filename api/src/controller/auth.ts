@@ -1,8 +1,9 @@
 import { compare } from 'bcrypt';
 import { Request, Response } from 'express';
-import { User } from '~/class/User.class';
 import jwt from 'jsonwebtoken';
-import JWT from '~/class/JWT.class';
+
+import JWT from '../class/JWT.class';
+import { User } from '../class/User.class';
 
 export namespace AuthController {
 	export const login = async (req: Request, res: Response) => {
@@ -11,7 +12,8 @@ export namespace AuthController {
 			let user = new User(username, password);
 			if (!(await user.getUserByUsername())) {
 				res.status(404).json({
-					message: 'No such user found with this username',
+					message:
+						'Aucun utilisateur na été trouvé avec cet username',
 				});
 				return;
 			}
@@ -28,28 +30,28 @@ export namespace AuthController {
 					}
 				);
 				res.status(200).json({
-					message: 'Login successful',
+					message: 'Vous êtes connectés !',
 					data: { user: user.toJSON(), bearer: token },
 				});
 			} else {
 				res.status(400).json({
-					message: 'Password is incorrect',
+					message: 'Le mot de passe est invalide',
 				});
 				return;
 			}
 		} else if (!password && username) {
 			res.status(400).json({
-				message: 'Password is required',
+				message: 'Le mot de passe est requis',
 			});
 			return;
 		} else if (!username && password) {
 			res.status(400).json({
-				message: 'Email is required',
+				message: "L'username est requis",
 			});
 			return;
 		} else {
 			res.status(400).json({
-				message: 'Email and password are required',
+				message: 'Veuillez renseigner un username et un mot de passe',
 			});
 			return;
 		}
@@ -63,34 +65,36 @@ export namespace AuthController {
 			user.createUser()
 				.then(user => {
 					res.status(201).json({
-						message: 'User created',
+						message: 'Utilisateur crée',
 						data: user.toJSON(),
 					});
 				})
 				.catch(err => {
+					console.log(err);
 					res.status(500).json({
-						message: 'An error occured',
+						message: 'Une erreur est survenue',
 						data: err,
 					});
 				});
 		} else if (!password && username && email) {
 			res.status(400).json({
-				message: 'Password is required',
+				message: 'Le mot de passe est requis',
 			});
 			return;
 		} else if (!username && password && email) {
 			res.status(400).json({
-				message: 'Username is required',
+				message: "L'username est requis",
 			});
 			return;
 		} else if (!email && username && password) {
 			res.status(400).json({
-				message: 'Email is required',
+				message: "L'email est requis",
 			});
 			return;
 		} else {
 			res.status(400).json({
-				message: 'Email, username and password are required',
+				message:
+					'Veuillez renseigner un username, un mot de passe et un email',
 			});
 			return;
 		}

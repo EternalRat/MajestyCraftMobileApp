@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { VoteController } from '~/controller/vote';
+import { VoteController } from '../../controller/vote';
 
 const app = express();
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
@@ -8,19 +8,25 @@ import Animated, {
 
 import Images from '../../../images/Images';
 import { Files } from '../../../images/ImagesTypes';
+import { AuthContext } from '../../domains/auth/Context';
+import { AuthStore } from '../../domains/auth/types';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Input } from '../../domains/templating/input/TextInput';
 import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Label } from '../../domains/templating/texts/Label';
 import { Title } from '../../domains/templating/texts/Title';
 import { Back } from './components/Back';
-import { AuthViewEnum } from './useAuth';
+import { AuthFields, AuthViewEnum } from './useAuth';
 
 interface Props {
 	setView: (view: AuthViewEnum) => void;
+	fields: AuthFields;
+	setEmail: (email: string) => void;
 }
 
-export const ForgottenPass = ({ setView }: Props) => {
+export const ForgottenPass = ({ setView, fields, setEmail }: Props) => {
+	const { login } = useContext<AuthStore>(AuthContext);
+
 	const viewOffsetY = useSharedValue(-230);
 	const offsetAnimation = useAnimatedStyle(() => {
 		return {
@@ -95,8 +101,8 @@ export const ForgottenPass = ({ setView }: Props) => {
 						}}>
 						<Label style={{ color: Color.WHITE }}>Email</Label>
 						<Input
-							value={'rr'}
-							updateText={e => {}}
+							value={fields.email}
+							updateText={e => setEmail(e.nativeEvent.text)}
 							icon={Images[Files.email]}
 							style={{ color: Color.WHITE }}
 						/>

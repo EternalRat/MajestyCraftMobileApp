@@ -1,4 +1,4 @@
-package com.capdrake;
+package com.majestycraft;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -20,11 +20,6 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
-  }
-
-  @Override
-  public void onResume() {
-    super.onResume();
   }
 
   /**

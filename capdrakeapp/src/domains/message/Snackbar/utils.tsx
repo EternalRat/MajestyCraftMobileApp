@@ -10,7 +10,7 @@ import { ContentMode, DisplayMode } from './type';
 export const configStyle: Record<DisplayMode, Record<ContentMode, any>> = {
 	[DisplayMode.TEXT_COLOR]: {
 		background: (color: string) => ({
-			backgroundColor: Color.DOVE,
+			backgroundColor: Color.BLACK,
 			borderColor: color,
 			borderWidth: 2,
 		}),
@@ -23,17 +23,17 @@ export const configStyle: Record<DisplayMode, Record<ContentMode, any>> = {
 			backgroundColor: color,
 		}),
 		text: () => ({
-			color: Color.DOVE,
+			color: Color.WHITE,
 		}),
 	},
 };
 
 export const getColorStyle = (style?: MessageType) => {
 	if (style === MessageType.ERROR) {
-		return Color.CARDINAL;
+		return Color.ERROR;
 	}
 	if (style === MessageType.SUCCESS) {
-		return Color.AMAZON;
+		return Color.SUCCESS;
 	}
 	return loadingColor;
 };

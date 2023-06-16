@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.capdrake"
+    namespace "com.majestycraft"
     defaultConfig {
-        applicationId "com.capdrake"
+        applicationId "com.majestycraft"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

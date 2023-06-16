@@ -1,4 +1,4 @@
-import { ComponentType, useMemo, useState } from 'react';
+import { ComponentType, useCallback, useMemo, useState } from 'react';
 
 import { ForgottenPass } from './ForgottenPass';
 import { Login } from './Login';
@@ -12,6 +12,17 @@ export enum AuthViewEnum {
 
 export interface ItemProps {
 	setView: (view: AuthViewEnum) => void;
+	fields: AuthFields;
+	setEmail: (email: string) => void;
+	setPassword: (password: string) => void;
+	setUsername: (username: string) => void;
+}
+
+export interface AuthFields {
+	email: string;
+	password: string;
+	username: string;
+	age: number;
 }
 
 const configViewAuth: Record<AuthViewEnum, ComponentType<ItemProps>> = {
@@ -22,10 +33,32 @@ const configViewAuth: Record<AuthViewEnum, ComponentType<ItemProps>> = {
 
 export const useAuth = () => {
 	const [view, setView] = useState<AuthViewEnum>(AuthViewEnum.LOGIN);
+	const [fields, setFields] = useState<AuthFields>({
+		email: '',
+		password: '',
+		username: '',
+		age: 0,
+	});
 	const AuthView = useMemo(() => configViewAuth[view], [view]);
+
+	const setEmail = useCallback((email: string) => {
+		setFields(prev => ({ ...prev, email }));
+	}, []);
+
+	const setPassword = useCallback((password: string) => {
+		setFields(prev => ({ ...prev, password }));
+	}, []);
+
+	const setUsername = useCallback((username: string) => {
+		setFields(prev => ({ ...prev, username }));
+	}, []);
 
 	return {
 		setView,
 		AuthView,
+		fields,
+		setEmail,
+		setPassword,
+		setUsername,
 	};
 };

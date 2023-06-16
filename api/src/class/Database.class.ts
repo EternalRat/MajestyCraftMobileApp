@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
+
+dotenv.config();
 
 export class Database {
 	public static _instance: Database;
@@ -11,7 +14,9 @@ export class Database {
 			);
 		}
 		console.info('Initializing Database');
+		console.log(process.env.DB_NAME);
 		Database._mysqlConnection = new Sequelize({
+			database: process.env.DB_NAME,
 			host: process.env.DB_HOST,
 			username: process.env.DB_USER,
 			password: process.env.DB_PASS,
@@ -19,22 +24,17 @@ export class Database {
 			logging: false,
 		});
 		Database._mysqlConnection
-			.authenticate()
-			.then(async () => {
-				const newDatabase = await Database._mysqlConnection.query(
-					'CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME + ';'
-				);
-				if (newDatabase) {
-					console.info('Database created');
-				} else {
-					console.info('Database already exists');
-				}
-				console.info('Connection has been established successfully.');
+			.sync()
+			.then(() => {
+				console.info('Database created if necessary !');
 			})
 			.catch(reason => {
 				console.error('Unable to connect to the database:');
 				console.error(reason);
 			});
+		Database._mysqlConnection.authenticate().then(() => {
+			console.info('Database authenticated !');
+		});
 		console.info('Database initialized !');
 	}
 

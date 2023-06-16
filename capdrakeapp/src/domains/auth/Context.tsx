@@ -1,8 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import {
 	createContext,
 	useCallback,
 	useContext,
-	useEffect,
 	useMemo,
 	useReducer,
 } from 'react';
@@ -21,6 +22,7 @@ export const defaultAuthStore: AuthStore = {
 		isLoading: true,
 		error: false,
 	},
+	dispatch: () => null,
 	login: (_username: string, _password: string) => Promise.resolve(),
 	logout: () => Promise.resolve(),
 	register: (
@@ -46,18 +48,22 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 		try {
 			const res = await AuthService.login(username, password);
 			const { token } = res.data;
+			await AsyncStorage.setItem('token', token);
 			dispatch({ type: ActionTypeAuth.LOGIN, username, token });
 		} catch (error) {
-			dispatch({ type: ActionTypeAuth.ERROR });
-			dispatchMessage({
-				type: ActionTypeMessage.ADD_ERROR,
-				code: 'LOGIN_FAILED',
-				duration: 3000,
-			});
+			if (axios.isAxiosError(error) && error.response) {
+				dispatch({ type: ActionTypeAuth.ERROR });
+				dispatchMessage({
+					type: ActionTypeMessage.ADD_ERROR,
+					code: error.response.data.message,
+					duration: 3000,
+				});
+			}
 		}
 	}, []);
 
 	const logout = useCallback(async () => {
+		await AsyncStorage.removeItem('token');
 		dispatch({ type: ActionTypeAuth.LOGOUT });
 	}, []);
 
@@ -74,6 +80,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				if (directLogin) {
 					const res = await AuthService.login(username, password);
 					const { token } = res.data;
+					await AsyncStorage.setItem('token', token);
 					dispatch({
 						type: ActionTypeAuth.LOGIN,
 						username,
@@ -81,36 +88,23 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					});
 				}
 			} catch (error) {
-				dispatch({ type: ActionTypeAuth.ERROR });
-				dispatchMessage({
-					type: ActionTypeMessage.ADD_ERROR,
-					code: 'REGISTER_FAILED',
-					duration: 3000,
-				});
+				if (axios.isAxiosError(error) && error.response) {
+					console.log(error.response.data.data);
+					dispatch({ type: ActionTypeAuth.ERROR });
+					dispatchMessage({
+						type: ActionTypeMessage.ADD_ERROR,
+						code: error.response.data.message,
+						duration: 3000,
+					});
+				}
 			}
 		},
 		[]
 	);
 
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (!token) {
-			dispatch({ type: ActionTypeAuth.LOGOUT });
-			return;
-		}
-		AuthService.healthAuth(token).then(res => {
-			if (res.status === 200) {
-				const { username } = res.data;
-				dispatch({ type: ActionTypeAuth.LOGIN, username, token });
-			} else {
-				dispatch({ type: ActionTypeAuth.LOGOUT });
-			}
-		});
-	}, []);
-
 	const value = useMemo(
-		() => ({ authStore, login, logout, register }),
-		[authStore, login, logout, register]
+		() => ({ authStore, login, logout, register, dispatch }),
+		[authStore, login, logout, register, dispatch]
 	);
 
 	return (

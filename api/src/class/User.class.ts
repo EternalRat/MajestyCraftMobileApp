@@ -1,4 +1,5 @@
 import { Model } from 'sequelize';
+
 import UserModel from './classModel/UserModel.class';
 
 export class User {

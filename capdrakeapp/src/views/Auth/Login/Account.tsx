@@ -5,8 +5,15 @@ import { Files } from '../../../../images/ImagesTypes';
 import { Input } from '../../../domains/templating/input/TextInput';
 import { Color, CONTAINER_WIDTH } from '../../../domains/templating/style';
 import { Label } from '../../../domains/templating/texts/Label';
+import { AuthFields } from '../useAuth';
 
-export const Account = () => {
+interface Props {
+	fields: AuthFields;
+	setPassword: (password: string) => void;
+	setUsername: (username: string) => void;
+}
+
+export const Account = ({ fields, setPassword, setUsername }: Props) => {
 	return (
 		<View
 			style={{
@@ -24,8 +31,8 @@ export const Account = () => {
 				}}>
 				<Label style={{ color: Color.WHITE }}>Pseudo</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={fields.username}
+					updateText={e => setUsername(e.nativeEvent.text)}
 					icon={Images[Files.user]}
 					style={{ color: Color.WHITE }}
 				/>
@@ -37,8 +44,8 @@ export const Account = () => {
 				}}>
 				<Label style={{ color: Color.WHITE }}>Mot de passe</Label>
 				<Input
-					value={'rr'}
-					updateText={e => {}}
+					value={fields.password}
+					updateText={e => setPassword(e.nativeEvent.text)}
 					icon={Images[Files.key]}
 					imageStyle={{ transform: [{ rotate: '45deg' }] }}
 					style={{ color: Color.WHITE }}

@@ -5,7 +5,7 @@ import {
 
 import { Files, FilesInfos } from './ImagesTypes';
 
-export const appName: string = 'capdrake'; // <------ change to your app name (in YourProject/ios/YourAppName)
+export const appName: string = 'MajestyCraft'; // <------ change to your app name (in YourProject/ios/YourAppName)
 
 export const Images: FilesInfos = {
 	[Files.key]: {

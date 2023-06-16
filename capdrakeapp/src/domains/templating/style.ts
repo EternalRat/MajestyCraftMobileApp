@@ -9,4 +9,6 @@ export enum Color {
 	BORDER = '#ced4da',
 }
 
+export const loadingColor = '#AAABB5';
+
 export const CONTAINER_WIDTH = 330;
