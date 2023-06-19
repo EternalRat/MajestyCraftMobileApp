@@ -104,4 +104,16 @@ export namespace AuthController {
 			message: 'Logout successful',
 		});
 	};
+
+	export const health = (req: Request, res: Response) => {
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		res.send({
+			message: 'You are logged in',
+			data: {
+				username: (req.user as any).username,
+				token: token!,
+			},
+		});
+	};
 }

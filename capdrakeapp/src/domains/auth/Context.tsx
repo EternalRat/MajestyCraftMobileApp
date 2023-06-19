@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import {
 	createContext,
@@ -42,6 +43,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 	);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
+	const navigate = useNavigation();
 
 	const login = useCallback(async (username: string, password: string) => {
 		dispatch({ type: ActionTypeAuth.LOADING });
