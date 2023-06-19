@@ -70,7 +70,6 @@ export namespace AuthController {
 					});
 				})
 				.catch(err => {
-					console.log(err);
 					res.status(500).json({
 						message: 'Une erreur est survenue',
 						data: err,

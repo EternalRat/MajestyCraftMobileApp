@@ -7,6 +7,7 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import { Database } from './class/Database.class';
 import api from './routes';
 import { sync } from './utils/sync.db';
+
 dotenv.config();
 
 const app: Express = express();
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser('secretcode'));
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: '*' }));
 
 app.use('/api', api);
 app.get('/', (req: Request, res: Response) => {

@@ -89,7 +89,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				}
 			} catch (error) {
 				if (axios.isAxiosError(error) && error.response) {
-					console.log(error.response.data.data);
 					dispatch({ type: ActionTypeAuth.ERROR });
 					dispatchMessage({
 						type: ActionTypeMessage.ADD_ERROR,
