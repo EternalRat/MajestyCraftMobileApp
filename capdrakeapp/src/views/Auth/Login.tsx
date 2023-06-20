@@ -21,6 +21,7 @@ export const Login = ({
 	fields,
 	setPassword,
 	setUsername,
+	navigation,
 }: ItemProps) => {
 	const [test, setTest] = useState(false);
 	const { login } = useContext<AuthStore>(AuthContext);

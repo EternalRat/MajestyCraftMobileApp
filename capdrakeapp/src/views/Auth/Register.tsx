@@ -1,3 +1,4 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -8,6 +9,7 @@ import Animated, {
 
 import { AuthContext } from '../../domains/auth/Context';
 import { AuthStore } from '../../domains/auth/types';
+import { RootStackParamList, Routes } from '../../domains/routing/routesName';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
@@ -21,6 +23,11 @@ interface Props {
 	setEmail: (email: string) => void;
 	setPassword: (password: string) => void;
 	setUsername: (username: string) => void;
+	navigation: NativeStackNavigationProp<
+		RootStackParamList,
+		Routes,
+		undefined
+	>;
 }
 
 export const Register = ({
@@ -29,6 +36,7 @@ export const Register = ({
 	setEmail,
 	setPassword,
 	setUsername,
+	navigation,
 }: Props) => {
 	const { register } = useContext<AuthStore>(AuthContext);
 
@@ -119,14 +127,23 @@ export const Register = ({
 								alignItems: 'center',
 								justifyContent: 'center',
 							}}
-							onClick={async () =>
-								await register(
+							onClick={async () => {
+								const res = await register(
 									fields.username,
 									fields.email,
 									fields.password,
 									true
-								)
-							}>
+								);
+								if (!res) {
+									return res === false
+										? setView(AuthViewEnum.LOGIN)
+										: null;
+								}
+								navigation.reset({
+									index: 0,
+									routes: [{ name: Routes.HOME }],
+								});
+							}}>
 							S'enregistrer
 						</Button>
 					</View>

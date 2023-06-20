@@ -1,5 +1,7 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ComponentType, useCallback, useMemo, useState } from 'react';
 
+import { RootStackParamList, Routes } from '../../domains/routing/routesName';
 import { ForgottenPass } from './ForgottenPass';
 import { Login } from './Login';
 import { Register } from './Register';
@@ -16,6 +18,11 @@ export interface ItemProps {
 	setEmail: (email: string) => void;
 	setPassword: (password: string) => void;
 	setUsername: (username: string) => void;
+	navigation: NativeStackNavigationProp<
+		RootStackParamList,
+		Routes,
+		undefined
+	>;
 }
 
 export interface AuthFields {

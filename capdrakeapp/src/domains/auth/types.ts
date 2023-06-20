@@ -20,7 +20,7 @@ export interface AuthStore {
 		email: string,
 		password: string,
 		directLogin: boolean
-	) => Promise<void>;
+	) => Promise<boolean | undefined>;
 }
 
 export enum ActionTypeAuth {

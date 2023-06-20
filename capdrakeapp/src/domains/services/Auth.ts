@@ -25,7 +25,7 @@ export namespace AuthService {
 	};
 
 	export const healthAuth = (token: string) => {
-		return axiosInstance.get('/auth/health', {
+		return axiosInstance.get('/auth', {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

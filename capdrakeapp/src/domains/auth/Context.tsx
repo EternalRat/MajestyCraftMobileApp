@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import axios from 'axios';
 import {
 	createContext,
@@ -11,6 +12,7 @@ import {
 
 import { MessageContext, MessageStore } from '../message/Context';
 import { ActionTypeMessage } from '../message/types';
+import { RootStackParamList, Routes } from '../routing/routesName';
 import { AuthService } from '../services/Auth';
 import { authReducer } from './reducer';
 import { ActionTypeAuth, AuthStore } from './types';
@@ -31,7 +33,7 @@ export const defaultAuthStore: AuthStore = {
 		_email: string,
 		_password: string,
 		_directLogin: boolean
-	) => Promise.resolve(),
+	) => Promise.resolve({} as boolean | undefined),
 };
 
 export const AuthContext = createContext<AuthStore>(defaultAuthStore);
@@ -43,15 +45,24 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 	);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
-	const navigate = useNavigation();
+	const navigation =
+		useNavigation<
+			NativeStackNavigationProp<RootStackParamList, Routes, undefined>
+		>();
 
 	const login = useCallback(async (username: string, password: string) => {
 		dispatch({ type: ActionTypeAuth.LOADING });
 		try {
 			const res = await AuthService.login(username, password);
-			const { token } = res.data;
-			await AsyncStorage.setItem('token', token);
-			dispatch({ type: ActionTypeAuth.LOGIN, username, token });
+			const {
+				data: { bearer },
+			} = res.data;
+			await AsyncStorage.setItem('token', bearer);
+			dispatch({ type: ActionTypeAuth.LOGIN, username, token: bearer });
+			navigation.reset({
+				index: 0,
+				routes: [{ name: Routes.HOME }],
+			});
 		} catch (error) {
 			if (axios.isAxiosError(error) && error.response) {
 				dispatch({ type: ActionTypeAuth.ERROR });
@@ -88,7 +99,9 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 						username,
 						token,
 					});
+					return true;
 				}
+				return false;
 			} catch (error) {
 				if (axios.isAxiosError(error) && error.response) {
 					dispatch({ type: ActionTypeAuth.ERROR });
