@@ -128,21 +128,12 @@ export const Register = ({
 								justifyContent: 'center',
 							}}
 							onClick={async () => {
-								const res = await register(
+								await register(
 									fields.username,
 									fields.email,
 									fields.password,
 									true
 								);
-								if (!res) {
-									return res === false
-										? setView(AuthViewEnum.LOGIN)
-										: null;
-								}
-								navigation.reset({
-									index: 0,
-									routes: [{ name: Routes.HOME }],
-								});
 							}}>
 							S'enregistrer
 						</Button>

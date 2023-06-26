@@ -33,7 +33,7 @@ export const defaultAuthStore: AuthStore = {
 		_email: string,
 		_password: string,
 		_directLogin: boolean
-	) => Promise.resolve({} as boolean | undefined),
+	) => Promise.resolve(),
 };
 
 export const AuthContext = createContext<AuthStore>(defaultAuthStore);
@@ -92,16 +92,20 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				await AuthService.register(username, email, password);
 				if (directLogin) {
 					const res = await AuthService.login(username, password);
-					const { token } = res.data;
-					await AsyncStorage.setItem('token', token);
+					const {
+						data: { bearer },
+					} = res.data;
+					await AsyncStorage.setItem('token', bearer);
 					dispatch({
 						type: ActionTypeAuth.LOGIN,
 						username,
-						token,
+						token: bearer,
 					});
-					return true;
+					navigation.reset({
+						index: 0,
+						routes: [{ name: Routes.HOME }],
+					});
 				}
-				return false;
 			} catch (error) {
 				if (axios.isAxiosError(error) && error.response) {
 					dispatch({ type: ActionTypeAuth.ERROR });

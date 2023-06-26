@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AuthWrapper } from './src/domains/auth/Context';
 import { MessageWrapper } from './src/domains/message/Context';
@@ -10,11 +11,16 @@ import { Color } from './src/domains/templating/style';
 
 const App = () => {
 	return (
-		<SafeAreaView style={{ backgroundColor: Color.BLACK, height: '100%' }}>
+		<SafeAreaView style={{ backgroundColor: Color.BLACK, flex: 1 }}>
 			<NavigationContainer>
 				<MessageWrapper>
 					<AuthWrapper>
-						<MajesticRouter />
+						<GestureHandlerRootView
+							style={{
+								flex: 1,
+							}}>
+							<MajesticRouter />
+						</GestureHandlerRootView>
 						<Message />
 					</AuthWrapper>
 				</MessageWrapper>

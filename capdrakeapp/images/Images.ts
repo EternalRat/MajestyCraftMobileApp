@@ -32,6 +32,18 @@ export const Images: FilesInfos = {
 		android: { type: AndroidFileType.Vector },
 		ios: { type: IosFileType.Pdf },
 	},
+	[Files.majestycraft]: {
+		path: './files/majestycraft.svg',
+		source: { uri: 'majestycraft' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
+	[Files.hamburger]: {
+		path: './files/hamburger.svg',
+		source: { uri: 'hamburger' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
 };
 
 export default Images;
