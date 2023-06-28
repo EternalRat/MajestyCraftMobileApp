@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import JWT from '~/class/JWT.class';
+import JWT from '../class/JWT.class';
 
 export namespace Middleware {
 	export const auth = (req: Request, res: Response, next: NextFunction) => {

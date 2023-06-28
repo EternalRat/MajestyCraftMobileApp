@@ -46,9 +46,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
 	const navigation =
-		useNavigation<
-			NativeStackNavigationProp<RootStackParamList, Routes, undefined>
-		>();
+		useNavigation<NativeStackNavigationProp<RootStackParamList, Routes>>();
 
 	const login = useCallback(async (username: string, password: string) => {
 		dispatch({ type: ActionTypeAuth.LOADING });
@@ -60,7 +58,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 			await AsyncStorage.setItem('token', bearer);
 			dispatch({ type: ActionTypeAuth.LOGIN, username, token: bearer });
 			navigation.reset({
-				index: 0,
 				routes: [{ name: Routes.HOME }],
 			});
 		} catch (error) {
@@ -69,6 +66,14 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				dispatchMessage({
 					type: ActionTypeMessage.ADD_ERROR,
 					code: error.response.data.message,
+					duration: 3000,
+				});
+				return;
+			} else {
+				dispatch({ type: ActionTypeAuth.ERROR });
+				dispatchMessage({
+					type: ActionTypeMessage.ADD_ERROR,
+					code: error as string,
 					duration: 3000,
 				});
 			}
@@ -102,7 +107,6 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 						token: bearer,
 					});
 					navigation.reset({
-						index: 0,
 						routes: [{ name: Routes.HOME }],
 					});
 				}

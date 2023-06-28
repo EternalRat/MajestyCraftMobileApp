@@ -1,8 +1,8 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import { Platform } from 'react-native';
 import { enableScreens } from 'react-native-screens';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { DrawerContent } from '../../components/Drawer';
 import { Auth } from '../../views/Auth/Auth';
@@ -13,51 +13,58 @@ import { RootStackParamList, Routes } from './routesName';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
-const Stack = createSharedElementStackNavigator();
-
 enableScreens();
 
 export const MajesticRouter = () => {
 	return (
-		<Stack.Navigator
+		<Drawer.Navigator
+			drawerContent={props => <DrawerContent {...props} />}
+			initialRouteName={Routes.HOME}
 			screenOptions={{
-				gestureEnabled: true,
-				gestureDirection: 'horizontal',
-				cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 				headerShown: false,
+				drawerActiveBackgroundColor: Color.ORANGE,
+				drawerActiveTintColor: '#333',
+				drawerInactiveTintColor: Color.WHITE,
+				drawerLabelStyle: {
+					fontSize: 15,
+					marginLeft: -25,
+				},
+				drawerPosition: 'left',
+				drawerType: 'front',
+				swipeEdgeWidth: Platform.OS === 'android' ? 180 : 0,
 			}}>
-			<Stack.Screen
-				name='Drawer'
-				component={() => (
-					<Drawer.Navigator
-						drawerContent={props => <DrawerContent {...props} />}
-						initialRouteName={Routes.HOME}
-						screenOptions={{
-							drawerActiveBackgroundColor: Color.ORANGE,
-							drawerActiveTintColor: '#333',
-							drawerInactiveTintColor: Color.WHITE,
-							drawerLabelStyle: {
-								fontFamily: 'Roboto-Medium',
-								fontSize: 15,
-							},
-							drawerPosition: 'left',
-							drawerType: 'front',
-							swipeEdgeWidth: Platform.OS === 'android' ? 180 : 0,
-						}}>
-						<Drawer.Screen
-							name={Routes.HOME}
-							component={Home}
-							options={{ headerShown: false }}
+			<Drawer.Screen
+				name={Routes.HOME}
+				component={Home}
+				options={{
+					drawerLabel: 'Accueil',
+					drawerIcon: ({ color, size }) => (
+						<Ionicons
+							name='home-outline'
+							size={size}
+							color={color}
 						/>
-						<Drawer.Screen
-							name={Routes.AUTH}
-							component={Auth}
-							options={{ headerShown: false }}
-						/>
-						<Drawer.Screen name={Routes.VOTE} component={Vote} />
-					</Drawer.Navigator>
-				)}
+					),
+				}}
 			/>
-		</Stack.Navigator>
+			<Drawer.Screen
+				name={Routes.AUTH}
+				component={Auth}
+				options={{
+					drawerItemStyle: {
+						display: 'none',
+					},
+				}}
+			/>
+			<Drawer.Screen
+				name={Routes.VOTE}
+				component={Vote}
+				options={{
+					drawerIcon: ({ color }) => (
+						<MaterialIcons name='vote' size={22} color={color} />
+					),
+				}}
+			/>
+		</Drawer.Navigator>
 	);
 };

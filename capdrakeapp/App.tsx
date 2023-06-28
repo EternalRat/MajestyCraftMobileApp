@@ -8,6 +8,7 @@ import { MessageWrapper } from './src/domains/message/Context';
 import { Message } from './src/domains/message/Message';
 import { MajesticRouter } from './src/domains/routing/Routes';
 import { Color } from './src/domains/templating/style';
+import { VotesWrapper } from './src/domains/Votes/Context';
 
 const App = () => {
 	return (
@@ -15,13 +16,15 @@ const App = () => {
 			<NavigationContainer>
 				<MessageWrapper>
 					<AuthWrapper>
-						<GestureHandlerRootView
-							style={{
-								flex: 1,
-							}}>
-							<MajesticRouter />
-						</GestureHandlerRootView>
-						<Message />
+						<VotesWrapper>
+							<GestureHandlerRootView
+								style={{
+									flex: 1,
+								}}>
+								<MajesticRouter />
+							</GestureHandlerRootView>
+							<Message />
+						</VotesWrapper>
 					</AuthWrapper>
 				</MessageWrapper>
 			</NavigationContainer>

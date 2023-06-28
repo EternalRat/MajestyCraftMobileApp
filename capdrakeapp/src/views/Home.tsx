@@ -44,7 +44,6 @@ export const Home = ({ navigation }: Props) => {
 			if (!token) {
 				dispatch({ type: ActionTypeAuth.LOGOUT });
 				navigation.reset({
-					index: 0,
 					routes: [{ name: Routes.AUTH }],
 				});
 				return;
@@ -100,7 +99,7 @@ export const Home = ({ navigation }: Props) => {
 									style={{
 										color: Color.WHITE,
 										position: 'absolute',
-										fontSize: 48,
+										fontSize: 36,
 										textAlign: 'center',
 										fontFamily: 'Roboto Condensed',
 										fontWeight: 'bold',

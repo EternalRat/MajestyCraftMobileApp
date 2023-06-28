@@ -36,4 +36,6 @@ services:
         - ./src:/app/src
       depends_on:
         - db
+      env_file:
+        - .env
      

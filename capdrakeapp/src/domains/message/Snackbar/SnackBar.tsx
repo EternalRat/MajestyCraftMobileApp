@@ -109,6 +109,7 @@ export const SnackBar = ({
 												: 0,
 										flexWrap: 'wrap',
 										alignSelf: 'center',
+										textAlign: 'center',
 									},
 									configStyle[mode].text(
 										getColorStyle(colorStyle)
