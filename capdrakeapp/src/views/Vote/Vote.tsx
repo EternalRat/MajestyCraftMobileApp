@@ -1,87 +1,49 @@
 import { DrawerScreenProps } from '@react-navigation/drawer/lib/typescript/src/types';
-import { useContext, useEffect, useState } from 'react';
-import { Linking, ScrollView, View } from 'react-native';
+import { useContext } from 'react';
+import { ScrollView, View } from 'react-native';
 
+import Images from '../../../images/Images';
+import { Files } from '../../../images/ImagesTypes';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
-import { AuthContext } from '../../domains/auth/Context';
-import { AuthStore } from '../../domains/auth/types';
-import { MessageContext, MessageStore } from '../../domains/message/Context';
-import { ActionTypeMessage, MessageType } from '../../domains/message/types';
 import { RootStackParamList, Routes } from '../../domains/routing/routesName';
 import { Button } from '../../domains/templating/buttons/Button';
+import { Input } from '../../domains/templating/input/TextInput';
 import { Color } from '../../domains/templating/style';
 import { Label } from '../../domains/templating/texts/Label';
 import { VotesContext } from '../../domains/Votes/Context';
 import { VotesStore } from '../../domains/Votes/types';
-import { allLinks } from './config';
+import { useVote } from './useVote';
 
 type Props = DrawerScreenProps<RootStackParamList, Routes.VOTE>;
 
-interface HasVoted {
-	hasVoted: boolean;
-	linkId: number;
-	link: string;
-}
-
 export const Vote = ({ navigation }: Props) => {
-	const { authStore } = useContext<AuthStore>(AuthContext);
 	const { votesStore } = useContext<VotesStore>(VotesContext);
-	const { dispatch: dispatchMessage } =
-		useContext<MessageStore>(MessageContext);
-	const [hasVoted, setHasVoted] = useState<HasVoted>({
-		hasVoted: false,
-		linkId: -1,
-		link: '',
-	});
-
-	useEffect(() => {
-		let interval = setInterval(async () => {
-			if (authStore.ip && hasVoted.hasVoted) {
-				const voteLinkInfo = allLinks.find(link =>
-					hasVoted.link.includes(link.base)
-				);
-				if (voteLinkInfo) {
-					const res = await fetch(
-						`${voteLinkInfo.checkVote
-							.replace(':ip', authStore.ip)
-							.replace(':id', hasVoted.linkId.toString())}`
-					);
-					const data = await res.json();
-					if (data.status === 200) {
-						dispatchMessage({
-							type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
-							message: 'Vous avez bien voté !',
-							typeMessage: MessageType.SUCCESS,
-							duration: 3000,
-						});
-						setHasVoted({
-							hasVoted: false,
-							linkId: -1,
-							link: '',
-						});
-					} else {
-						dispatchMessage({
-							type: ActionTypeMessage.ADD_ERROR,
-							code: 'Une erreur est survenue, veuillez réessayer.',
-							duration: 3000,
-						});
-					}
-				}
-			}
-		}, 1000);
-		return () => clearInterval(interval);
-	}, []);
+	const { handleVote, username, setUsername } = useVote();
 
 	return (
 		<View style={{ backgroundColor: Color.BLACK, flex: 1 }}>
 			<Header navigation={navigation} />
 			<ScrollView contentContainerStyle={{ flex: 1 }}>
+				<View
+					style={{
+						flex: 0.5,
+						justifyContent: 'flex-end',
+						alignSelf: 'center',
+						bottom: 24,
+					}}>
+					<Label style={{ color: Color.WHITE }}>Pseudo</Label>
+					<Input
+						value={username}
+						updateText={e => setUsername(e.nativeEvent.text)}
+						icon={Images[Files.user]}
+						style={{ color: Color.WHITE }}
+					/>
+				</View>
 				{votesStore.length > 0 ? (
 					<View
 						style={{
-							flex: 1,
-							justifyContent: 'center',
+							flex: 0.5,
 							gap: 15,
 							width: '70%',
 							alignSelf: 'center',
@@ -89,34 +51,20 @@ export const Vote = ({ navigation }: Props) => {
 						{votesStore.map(vote => (
 							<View key={vote.id}>
 								<Button
+									disabled={username.length === 0}
 									style={{
 										width: '100%',
-										backgroundColor: Color.ORANGE,
+										backgroundColor:
+											username.length === 0
+												? Color.BORDER
+												: Color.ORANGE,
 										height: 40,
 										display: 'flex',
 										alignItems: 'center',
 										justifyContent: 'center',
 										borderRadius: 5,
 									}}
-									onClick={async () => {
-										const supported =
-											await Linking.canOpenURL(vote.link);
-
-										if (supported) {
-											setHasVoted({
-												hasVoted: true,
-												linkId: vote.id,
-												link: vote.link,
-											});
-											await Linking.openURL(vote.link);
-										} else {
-											dispatchMessage({
-												type: ActionTypeMessage.ADD_ERROR,
-												code: 'Ouverture du lien impossible, veuillez réessayer.',
-												duration: 3000,
-											});
-										}
-									}}>
+									onClick={handleVote(vote)}>
 									{vote.title}
 								</Button>
 							</View>

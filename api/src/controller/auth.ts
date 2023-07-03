@@ -122,7 +122,7 @@ export namespace AuthController {
 			message: 'You are logged in',
 			data: {
 				username: (req.user as any).username,
-				ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+				ip: req.socket.remoteAddress,
 			},
 		});
 	};
