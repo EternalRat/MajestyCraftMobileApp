@@ -1,4 +1,3 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -9,7 +8,6 @@ import Animated, {
 
 import { AuthContext } from '../../domains/auth/Context';
 import { AuthStore } from '../../domains/auth/types';
-import { RootStackParamList, Routes } from '../../domains/routing/routesName';
 import { Button } from '../../domains/templating/buttons/Button';
 import { Color, CONTAINER_WIDTH } from '../../domains/templating/style';
 import { Title } from '../../domains/templating/texts/Title';
@@ -23,11 +21,6 @@ interface Props {
 	setEmail: (email: string) => void;
 	setPassword: (password: string) => void;
 	setUsername: (username: string) => void;
-	navigation: NativeStackNavigationProp<
-		RootStackParamList,
-		Routes,
-		undefined
-	>;
 }
 
 export const Register = ({
@@ -36,7 +29,6 @@ export const Register = ({
 	setEmail,
 	setPassword,
 	setUsername,
-	navigation,
 }: Props) => {
 	const { register } = useContext<AuthStore>(AuthContext);
 
@@ -126,6 +118,7 @@ export const Register = ({
 								display: 'flex',
 								alignItems: 'center',
 								justifyContent: 'center',
+								borderRadius: 5,
 							}}
 							onClick={async () => {
 								await register(

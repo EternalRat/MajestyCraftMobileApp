@@ -11,9 +11,7 @@ const configReducer: VotesReducer = {
 		_state: VotesDetails[],
 		action: Action
 	) => {
-		return {
-			...(action as getAllVotesDetailsPayloadAction).votes,
-		};
+		return (action as getAllVotesDetailsPayloadAction).votes;
 	},
 };
 

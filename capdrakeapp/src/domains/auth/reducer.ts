@@ -11,6 +11,7 @@ const configReducer: AuthReducer = {
 		return {
 			username: (action as LoginPayloadAction).username,
 			token: (action as LoginPayloadAction).token,
+			ip: (action as LoginPayloadAction).ip,
 			isLoggedIn: true,
 			isLoading: false,
 			error: false,
@@ -20,6 +21,7 @@ const configReducer: AuthReducer = {
 		return {
 			username: '',
 			token: '',
+			ip: '',
 			isLoggedIn: false,
 			isLoading: false,
 			error: false,

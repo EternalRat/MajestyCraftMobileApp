@@ -123,6 +123,7 @@ export const ForgottenPass = ({ setView, fields, setEmail }: Props) => {
 								display: 'flex',
 								alignItems: 'center',
 								justifyContent: 'center',
+								borderRadius: 5,
 							}}
 							onClick={() => {}}>
 							Renvoyer mon mot de passe

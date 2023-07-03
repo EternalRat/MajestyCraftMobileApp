@@ -51,11 +51,12 @@ export const Home = ({ navigation }: Props) => {
 			AuthService.healthAuth(token)
 				.then(async res => {
 					if (res.status === 200) {
-						const { username } = res.data;
+						const { username, ip } = res.data;
 						dispatch({
 							type: ActionTypeAuth.LOGIN,
 							username,
 							token,
+							ip,
 						});
 					} else {
 						await logout();

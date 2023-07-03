@@ -31,5 +31,5 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 app.listen(port, () => {
 	Database.getInstance();
 	sync();
-	console.info(`⚡️[server]: Server is running at http://localhost:${port}`);
+	console.info(`⚡️ [server]: Server is running at http://localhost:${port}`);
 });

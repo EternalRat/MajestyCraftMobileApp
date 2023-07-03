@@ -21,6 +21,7 @@ export const defaultAuthStore: AuthStore = {
 	authStore: {
 		username: '',
 		token: '',
+		ip: '',
 		isLoggedIn: false,
 		isLoading: true,
 		error: false,
@@ -53,10 +54,15 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 		try {
 			const res = await AuthService.login(username, password);
 			const {
-				data: { bearer },
+				data: { bearer, ip },
 			} = res.data;
 			await AsyncStorage.setItem('token', bearer);
-			dispatch({ type: ActionTypeAuth.LOGIN, username, token: bearer });
+			dispatch({
+				type: ActionTypeAuth.LOGIN,
+				username,
+				token: bearer,
+				ip,
+			});
 			navigation.reset({
 				routes: [{ name: Routes.HOME }],
 			});
@@ -98,13 +104,14 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				if (directLogin) {
 					const res = await AuthService.login(username, password);
 					const {
-						data: { bearer },
+						data: { bearer, ip },
 					} = res.data;
 					await AsyncStorage.setItem('token', bearer);
 					dispatch({
 						type: ActionTypeAuth.LOGIN,
 						username,
 						token: bearer,
+						ip,
 					});
 					navigation.reset({
 						routes: [{ name: Routes.HOME }],

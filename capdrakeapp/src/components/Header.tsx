@@ -8,7 +8,7 @@ import { RootStackParamList, Routes } from '../domains/routing/routesName';
 import { Color } from '../domains/templating/style';
 
 interface Props {
-	navigation: DrawerNavigationProp<RootStackParamList, Routes, undefined>;
+	navigation: DrawerNavigationProp<RootStackParamList, Routes>;
 }
 
 export const Header = ({ navigation }: Props) => {

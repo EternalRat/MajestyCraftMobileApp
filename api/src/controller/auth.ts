@@ -31,7 +31,13 @@ export namespace AuthController {
 				);
 				res.status(200).json({
 					message: 'Vous êtes connectés !',
-					data: { user: user.toJSON(), bearer: token },
+					data: {
+						user: user.toJSON(),
+						bearer: token,
+						ip:
+							req.headers['x-forwarded-for'] ||
+							req.socket.remoteAddress,
+					},
 				});
 			} else {
 				res.status(400).json({
@@ -108,11 +114,15 @@ export namespace AuthController {
 	export const health = (req: Request, res: Response) => {
 		const authHeader = req.headers['authorization'];
 		const token = authHeader && authHeader.split(' ')[1];
+		if (token == null) return res.sendStatus(401);
+		const verify = jwt.verify(token, JWT.jwtOptions.secretOrKey);
+		if (!verify) return res.sendStatus(403);
+
 		res.send({
 			message: 'You are logged in',
 			data: {
 				username: (req.user as any).username,
-				token: token!,
+				ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
 			},
 		});
 	};

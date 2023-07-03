@@ -21,7 +21,6 @@ export const Login = ({
 	fields,
 	setPassword,
 	setUsername,
-	navigation,
 }: ItemProps) => {
 	const [test, setTest] = useState(false);
 	const { login } = useContext<AuthStore>(AuthContext);
@@ -122,6 +121,7 @@ export const Login = ({
 								display: 'flex',
 								alignItems: 'center',
 								justifyContent: 'center',
+								borderRadius: 5,
 							}}
 							onClick={() =>
 								login(fields.username, fields.password)

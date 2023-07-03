@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerContent } from '../../components/Drawer';
 import { Auth } from '../../views/Auth/Auth';
 import { Home } from '../../views/Home';
-import { Vote } from '../../views/Vote';
+import { Vote } from '../../views/Vote/Vote';
 import { Color } from '../templating/style';
 import { RootStackParamList, Routes } from './routesName';
 

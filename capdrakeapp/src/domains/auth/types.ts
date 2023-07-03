@@ -5,6 +5,7 @@ import { ReducerType } from '../reducer';
 export interface Auth {
 	username: string;
 	token: string;
+	ip: string;
 	isLoggedIn: boolean;
 	isLoading: boolean;
 	error: boolean;
@@ -33,6 +34,7 @@ export enum ActionTypeAuth {
 export interface LoginPayloadAction {
 	username: string;
 	token: string;
+	ip: string;
 }
 
 export type Action =
