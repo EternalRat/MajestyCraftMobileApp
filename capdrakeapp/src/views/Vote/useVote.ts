@@ -25,7 +25,7 @@ export const useVote = () => {
 		linkId: -1,
 		link: '',
 	});
-	const [username, setUsername] = useState<string>('');
+	const [username, setUsername] = useState<string>(authStore.username);
 
 	useEffect(() => {
 		let interval = setInterval(async () => {

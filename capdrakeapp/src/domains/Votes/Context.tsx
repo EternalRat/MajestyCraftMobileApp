@@ -11,9 +11,12 @@ import { ActionTypeMessage } from '../message/types';
 import { VoteService } from '../services/Vote';
 import { votesReducer } from './reducer';
 import { ActionTypeVotes, VotesDetails, VotesStore } from './types';
+import { userVotesReducer } from './User/reducer';
+import { ActionTypeUserVotes, UserVoteDetail } from './User/types';
 
 const defaultVotes: VotesStore = {
 	votesStore: [],
+	userVotes: [],
 };
 
 export const VotesContext = createContext<VotesStore>(defaultVotes);
@@ -22,6 +25,10 @@ export const VotesWrapper = ({ children }: { children: React.ReactNode }) => {
 	const [votesStore, dispatch] = useReducer(
 		votesReducer,
 		defaultVotes.votesStore
+	);
+	const [userVotes, dispatchUserVotes] = useReducer(
+		userVotesReducer,
+		defaultVotes.userVotes
 	);
 	const { dispatch: dispatchMessage } =
 		useContext<MessageStore>(MessageContext);
@@ -51,9 +58,38 @@ export const VotesWrapper = ({ children }: { children: React.ReactNode }) => {
 					duration: 3000,
 				});
 			});
+		VoteService.getAllUserVotes()
+			.then(result => {
+				const { data } = result.data;
+				const votes: UserVoteDetail[] = data.map((vote: any) => {
+					return {
+						id: parseInt(vote.id),
+						date_dernier: parseInt(vote.date_dernier),
+						ip: vote.ip,
+						isOld: parseInt(vote.isOld),
+						nbre_votes: parseInt(vote.nbre_votes),
+						pseudo: vote.pseudo,
+						site: vote.site,
+					} as UserVoteDetail;
+				});
+				dispatchUserVotes({
+					type: ActionTypeUserVotes.GET_ALL_VOTES_DETAILS,
+					votes,
+				});
+			})
+			.catch(() => {
+				dispatchMessage({
+					type: ActionTypeMessage.ADD_ERROR,
+					code: "Récupération des données utilisateurs impossibles. Veuillez rédémarrer l'application.",
+					duration: 3000,
+				});
+			});
 	}, []);
 
-	const value = useMemo(() => ({ votesStore }), [votesStore]);
+	const value = useMemo(
+		() => ({ votesStore, userVotes }),
+		[votesStore, userVotes]
+	);
 
 	return (
 		<VotesContext.Provider value={value}>{children}</VotesContext.Provider>

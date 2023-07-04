@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-import { VoteConfigs } from '~/models/Vote';
+import { VoteConfigs } from '~/models';
 
 class VoteConfigModel {
 	public static async getAllConfigs(): Promise<Model<any, any>[]> {

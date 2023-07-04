@@ -1,4 +1,5 @@
 import { ReducerType } from '../reducer';
+import { UserVoteDetail } from './User/types';
 
 export interface VotesDetails {
 	id: number;
@@ -10,6 +11,7 @@ export interface VotesDetails {
 
 export interface VotesStore {
 	votesStore: VotesDetails[];
+	userVotes: UserVoteDetail[];
 }
 
 export enum ActionTypeVotes {
