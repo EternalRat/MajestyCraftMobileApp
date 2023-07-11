@@ -3,6 +3,8 @@ import { UserVoteDetail } from './User/types';
 
 export interface VotesDetails {
 	id: number;
+	serveur: number;
+	action: string;
 	link: string;
 	timer: number;
 	title: string;

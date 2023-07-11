@@ -15,6 +15,16 @@ class VoteModel {
 		});
 	}
 
+	public static async getUserVotes(
+		pseudo: string
+	): Promise<Model<any, any>[]> {
+		return Vote.findAll({
+			where: {
+				pseudo,
+			},
+		});
+	}
+
 	public static async updateVote(
 		nbre_votes: number,
 		date_dernier: number,

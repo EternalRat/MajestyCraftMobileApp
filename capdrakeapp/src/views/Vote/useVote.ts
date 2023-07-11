@@ -1,19 +1,23 @@
 /* eslint-disable indent */
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Linking } from 'react-native';
 
 import { AuthContext } from '../../domains/auth/Context';
 import { AuthStore } from '../../domains/auth/types';
 import { MessageContext, MessageStore } from '../../domains/message/Context';
-import { ActionTypeMessage } from '../../domains/message/types';
+import { ActionTypeMessage, MessageType } from '../../domains/message/types';
+import { VoteService } from '../../domains/services/Vote';
 import { VotesDetails } from '../../domains/Votes/types';
 import { allLinks } from './config';
 
-interface HasVoted {
+export interface HasVoted {
 	hasVoted: boolean;
 	linkId: number;
+	customId: string;
 	link: string;
+	action: string;
+	serveur: number;
 }
 
 export const useVote = () => {
@@ -23,34 +27,84 @@ export const useVote = () => {
 	const [hasVoted, setHasVoted] = useState<HasVoted>({
 		hasVoted: false,
 		linkId: -1,
+		customId: '',
 		link: '',
+		action: '',
+		serveur: -1,
 	});
 	const [username, setUsername] = useState<string>(authStore.username);
 
 	useEffect(() => {
 		let interval = setInterval(async () => {
 			if (authStore.ip && hasVoted.hasVoted) {
-				const voteLinkInfo = allLinks.find(link =>
-					hasVoted.link.includes(link.base)
-				);
-				if (voteLinkInfo) {
-					const res = await axios.get(
-						`${voteLinkInfo.checkVote
-							.replace(':ip', authStore.ip)
-							.replace(':id', hasVoted.linkId.toString())}`
+				try {
+					const voteLinkInfo = allLinks.find(link =>
+						hasVoted.link.includes(link.base)
 					);
-					const data = await res.data;
-					if (voteLinkInfo.hasVoted(data)) {
-						
+					if (voteLinkInfo) {
+						const res = await axios.get(
+							`${voteLinkInfo.checkVote
+								.replace(':ip', '163.5.11.16')
+								.replace(':id', hasVoted.customId)
+								.replace(':username', username)}`
+						);
+						const data = res.data;
+						console.log(
+							'🚀 ~ file: useVote.ts:51 ~ interval ~ data:',
+							data,
+							voteLinkInfo.checkVote
+								.replace(':ip', '10.29.126.48')
+								.replace(':id', hasVoted.customId)
+						);
+						if (voteLinkInfo.hasVoted(data)) {
+							console.log('test');
+							VoteService.createVote(
+								hasVoted.linkId,
+								username,
+								Date.now() / 1000,
+								authStore.ip
+							);
+							if (username === authStore.username) {
+								const res = await VoteService.stockVote(
+									hasVoted,
+									username
+								);
+								const status = res.status;
+								if (status === HttpStatusCode.Ok) {
+									dispatchMessage({
+										message: `Merci pour votre vote !`,
+										typeMessage: MessageType.SUCCESS,
+										duration: 3000,
+										type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+									});
+								} else {
+									dispatchMessage({
+										code: `Une erreur est survenue lors de l'enregistrement de votre vote.`,
+										duration: 3000,
+										type: ActionTypeMessage.ADD_ERROR,
+									});
+								}
+								setHasVoted({
+									action: '',
+									hasVoted: false,
+									link: '',
+									linkId: -1,
+									customId: '',
+									serveur: -1,
+								});
+							}
+						}
 					}
+				} catch (err) {
+					console.error(err);
 				}
 			}
-		}, 1000);
+		}, 5000);
 		return () => clearInterval(interval);
-	}, []);
+	}, [hasVoted]);
 
 	const handleVote =
-		({ link, id }: VotesDetails) =>
+		({ link, id, action, serveur, idCustom }: VotesDetails) =>
 		async () => {
 			const supported = await Linking.canOpenURL(link);
 
@@ -58,7 +112,10 @@ export const useVote = () => {
 				setHasVoted({
 					hasVoted: true,
 					linkId: id,
-					link: link,
+					customId: idCustom,
+					link,
+					action,
+					serveur,
 				});
 				await Linking.openURL(link);
 			} else {

@@ -15,3 +15,5 @@ class RewardModel {
 		});
 	}
 }
+
+export default RewardModel;
