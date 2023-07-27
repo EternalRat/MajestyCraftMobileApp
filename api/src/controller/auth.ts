@@ -1,6 +1,6 @@
-import { compare } from 'bcrypt';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import * as Password from 'node-php-password';
 
 import JWT from '../class/JWT.class';
 import { User } from '../class/User.class';
@@ -17,7 +17,7 @@ export namespace AuthController {
 				});
 				return;
 			}
-			if (await compare(password, user.password as string)) {
+			if (Password.verify(password, user.password as string)) {
 				let token = jwt.sign(
 					{
 						id: user.id,
@@ -58,48 +58,6 @@ export namespace AuthController {
 		} else {
 			res.status(400).json({
 				message: 'Veuillez renseigner un username et un mot de passe',
-			});
-			return;
-		}
-	};
-
-	export const register = (req: Request, res: Response) => {
-		const { username, password, email } = req.body;
-		if (username && password && email) {
-			let user = new User(username, password);
-			user.email = email;
-			user.createUser()
-				.then(user => {
-					res.status(201).json({
-						message: 'Utilisateur crée',
-						data: user.toJSON(),
-					});
-				})
-				.catch(err => {
-					res.status(500).json({
-						message: 'Une erreur est survenue',
-						data: err,
-					});
-				});
-		} else if (!password && username && email) {
-			res.status(400).json({
-				message: 'Le mot de passe est requis',
-			});
-			return;
-		} else if (!username && password && email) {
-			res.status(400).json({
-				message: "L'username est requis",
-			});
-			return;
-		} else if (!email && username && password) {
-			res.status(400).json({
-				message: "L'email est requis",
-			});
-			return;
-		} else {
-			res.status(400).json({
-				message:
-					'Veuillez renseigner un username, un mot de passe et un email',
 			});
 			return;
 		}

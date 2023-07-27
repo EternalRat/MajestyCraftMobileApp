@@ -67,6 +67,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 				routes: [{ name: Routes.HOME }],
 			});
 		} catch (error) {
+			console.log(error)
 			if (axios.isAxiosError(error) && error.response) {
 				dispatch({ type: ActionTypeAuth.ERROR });
 				dispatchMessage({

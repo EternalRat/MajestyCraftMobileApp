@@ -8,7 +8,8 @@ import { AuthStore } from '../../domains/auth/types';
 import { MessageContext, MessageStore } from '../../domains/message/Context';
 import { ActionTypeMessage, MessageType } from '../../domains/message/types';
 import { VoteService } from '../../domains/services/Vote';
-import { VotesDetails } from '../../domains/Votes/types';
+import { VotesContext } from '../../domains/Votes/Context';
+import { VotesDetails, VotesStore } from '../../domains/Votes/types';
 import { allLinks } from './config';
 
 export interface HasVoted {
@@ -32,6 +33,7 @@ export const useVote = () => {
 		action: '',
 		serveur: -1,
 	});
+	const { refreshUserVotes } = useContext<VotesStore>(VotesContext);
 	const [username, setUsername] = useState<string>(authStore.username);
 
 	useEffect(() => {
@@ -44,54 +46,56 @@ export const useVote = () => {
 					if (voteLinkInfo) {
 						const res = await axios.get(
 							`${voteLinkInfo.checkVote
-								.replace(':ip', '163.5.11.16')
+								.replace(':ip', authStore.ip)
 								.replace(':id', hasVoted.customId)
 								.replace(':username', username)}`
 						);
 						const data = res.data;
-						console.log(
-							'🚀 ~ file: useVote.ts:51 ~ interval ~ data:',
-							data,
-							voteLinkInfo.checkVote
-								.replace(':ip', '10.29.126.48')
-								.replace(':id', hasVoted.customId)
-						);
 						if (voteLinkInfo.hasVoted(data)) {
-							console.log('test');
-							VoteService.createVote(
-								hasVoted.linkId,
-								username,
-								Date.now() / 1000,
-								authStore.ip
-							);
-							if (username === authStore.username) {
-								const res = await VoteService.stockVote(
-									hasVoted,
-									username
+							try {
+								await VoteService.createVote(
+									hasVoted.linkId,
+									username,
+									Date.now() / 1000,
+									authStore.ip
 								);
-								const status = res.status;
-								if (status === HttpStatusCode.Ok) {
-									dispatchMessage({
-										message: `Merci pour votre vote !`,
-										typeMessage: MessageType.SUCCESS,
-										duration: 3000,
-										type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
-									});
-								} else {
-									dispatchMessage({
-										code: `Une erreur est survenue lors de l'enregistrement de votre vote.`,
-										duration: 3000,
-										type: ActionTypeMessage.ADD_ERROR,
-									});
+								if (username === authStore.username) {
+									try {
+										const res = await VoteService.stockVote(
+											hasVoted,
+											username
+										);
+										const status = res.status;
+										if (status === HttpStatusCode.Ok) {
+											dispatchMessage({
+												message: `Merci pour votre vote !`,
+												typeMessage:
+													MessageType.SUCCESS,
+												duration: 3000,
+												type: ActionTypeMessage.ADD_GENERIC_MESSAGE,
+											});
+											refreshUserVotes();
+										} else {
+											dispatchMessage({
+												code: `Une erreur est survenue lors de l'enregistrement de votre vote.`,
+												duration: 3000,
+												type: ActionTypeMessage.ADD_ERROR,
+											});
+										}
+										setHasVoted({
+											action: '',
+											hasVoted: false,
+											link: '',
+											linkId: -1,
+											customId: '',
+											serveur: -1,
+										});
+									} catch (err) {
+										console.error(err);
+									}
 								}
-								setHasVoted({
-									action: '',
-									hasVoted: false,
-									link: '',
-									linkId: -1,
-									customId: '',
-									serveur: -1,
-								});
+							} catch (err) {
+								console.error(err);
 							}
 						}
 					}

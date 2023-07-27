@@ -10,6 +10,7 @@ import { Home } from '../../views/Home';
 import { Vote } from '../../views/Vote/Vote';
 import { Color } from '../templating/style';
 import { RootStackParamList, Routes } from './routesName';
+import { TopVotes } from '../../views/TopVoteurs';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -60,6 +61,16 @@ export const MajesticRouter = () => {
 				name={Routes.VOTE}
 				component={Vote}
 				options={{
+					drawerIcon: ({ color }) => (
+						<MaterialIcons name='vote' size={22} color={color} />
+					),
+				}}
+			/>
+			<Drawer.Screen
+				name={Routes.TOPVOTE}
+				component={TopVotes}
+				options={{
+					drawerLabel: 'Top Voteurs',
 					drawerIcon: ({ color }) => (
 						<MaterialIcons name='vote' size={22} color={color} />
 					),

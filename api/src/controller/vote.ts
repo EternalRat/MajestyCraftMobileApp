@@ -65,4 +65,10 @@ export namespace VoteController {
 			res.status(200).send('Vote stocked');
 		});
 	};
+
+	export const top10 = (req: Request, res: Response) => {
+		Vote.top10().then(data => {
+			res.status(200).send({ data });
+		});
+	};
 }

@@ -97,19 +97,6 @@ export class User {
 		}
 	}
 
-	public async createUser(): Promise<User> {
-		try {
-			const user = await UserModel.createUser(
-				this._pseudo,
-				this._email,
-				this._password
-			);
-			return this;
-		} catch (error) {
-			throw new Error('Error in createUser: ' + error);
-		}
-	}
-
 	public async getUserById(id: string): Promise<User> {
 		try {
 			const user = await UserModel.getUser(id);
@@ -119,21 +106,6 @@ export class User {
 			return this;
 		} catch (error) {
 			throw new Error('Error in getUserById: ' + error);
-		}
-	}
-
-	public async updateUserPassword(newPassword: string): Promise<User> {
-		try {
-			const user = await UserModel.updateUserPassword(
-				this._id,
-				newPassword
-			);
-			if (user) {
-				this._fillFromModel(user);
-			}
-			return this;
-		} catch (error) {
-			throw new Error('Error in updateUserPassword: ' + error);
 		}
 	}
 }

@@ -16,10 +16,11 @@ export const Header = ({ navigation }: Props) => {
 		<View
 			style={{
 				height: 64,
-				backgroundColor: 'black',
 				display: 'flex',
 				justifyContent: 'space-between',
 				flexDirection: 'row',
+				zIndex: 1000,
+				position: 'absolute',
 			}}>
 			<TouchableOpacity onPress={() => navigation.openDrawer()}>
 				<NativeImage

@@ -6,7 +6,7 @@ export const Footer = () => {
 	return (
 		<View
 			style={{
-				backgroundColor: 'black',
+				backgroundColor: Color.BLACK,
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',

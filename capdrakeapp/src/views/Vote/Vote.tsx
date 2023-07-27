@@ -20,6 +20,7 @@ import { useVote } from './useVote';
 type Props = DrawerScreenProps<RootStackParamList, Routes.VOTE>;
 
 interface Timer {
+	id: number;
 	active: boolean;
 	timer: number;
 }
@@ -35,13 +36,18 @@ export const Vote = ({ navigation }: Props) => {
 				setTimer(prev => {
 					const state = [...prev];
 					state[index] = {
+						id: userVote.site,
 						active:
 							(userVote.date_dernier ?? 0) +
-								votesStore[index].timer >
+								votesStore.find(
+									voteStore => voteStore.id === userVote.site
+								)!.timer >
 							Date.now() / 1000,
 						timer:
 							(userVote.date_dernier ?? 0) +
-							votesStore[index].timer -
+							votesStore.find(
+								voteStore => voteStore.id === userVote.site
+							)!.timer -
 							parseInt((Date.now() / 1000).toString()),
 					};
 					return state;
@@ -83,15 +89,28 @@ export const Vote = ({ navigation }: Props) => {
 								<View key={vote.id}>
 									<Button
 										disabled={
-											timer[index] && timer[index].active
+											timer.find(
+												time =>
+													time && time.id === vote.id
+											) &&
+											timer.find(
+												time => time.id === vote.id
+											)!.active
 												? true
 												: username.length === 0
 										}
 										style={{
 											width: '100%',
 											backgroundColor:
-												(timer[index] &&
-													timer[index].active) ||
+												(timer.find(
+													time =>
+														time &&
+														time.id === vote.id
+												) &&
+													timer.find(
+														time =>
+															time.id === vote.id
+													)!.active) ||
 												username.length === 0
 													? Color.BORDER
 													: Color.ORANGE,
@@ -102,10 +121,20 @@ export const Vote = ({ navigation }: Props) => {
 											borderRadius: 5,
 										}}
 										onClick={handleVote(vote)}>
-										{timer[index] && timer[index].active
+										{timer.find(
+											time => time && time.id === vote.id
+										) &&
+										timer.find(time => time.id === vote.id)!
+											.active
 											? `Vous pourrez revoter dans ${moment()
 													.startOf('day')
-													.seconds(timer[index].timer)
+													.seconds(
+														timer.find(
+															time =>
+																time.id ===
+																vote.id
+														)!.timer
+													)
 													.format('HH:MM:ss')}`
 											: vote.title}
 									</Button>

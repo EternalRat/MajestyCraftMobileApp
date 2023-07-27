@@ -75,6 +75,10 @@ class Vote {
 	) {
 		return RewardModel.create(pseudo, action, serveur);
 	}
+
+	public static async top10() {
+		return VoteModel.top10();
+	}
 }
 
 export default Vote;

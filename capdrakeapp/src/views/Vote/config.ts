@@ -128,7 +128,7 @@ export const allLinks: LinkVote[] = [
 	{
 		base: 'serveur-minecraft.com',
 		checkVote: 'https://serveur-minecraft.com/api/1/vote/:id/:ip',
-		hasVoted: (data: any) => parseInt(data) === 0,
+		hasVoted: (data: any) => parseInt(data) > 0,
 	},
 	{
 		base: 'meilleurs-serveurs.com',

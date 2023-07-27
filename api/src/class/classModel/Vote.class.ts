@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import { Model, Sequelize } from 'sequelize';
 
 import { Vote } from '~/models';
 
@@ -59,6 +59,22 @@ class VoteModel {
 			site,
 			date_dernier,
 			nbre_votes: 1,
+		});
+	}
+
+	public static async top10(): Promise<Model<any, any>[]> {
+		return Vote.findAll({
+			limit: 10,
+			order: [['total_amount', 'DESC']],
+			group: 'pseudo',
+			attributes: [
+				'pseudo',
+				[
+					Sequelize.fn('sum', Sequelize.col('nbre_votes')),
+					'total_amount',
+				],
+			],
+			benchmark: true,
 		});
 	}
 }

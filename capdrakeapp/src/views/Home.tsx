@@ -76,6 +76,7 @@ export const Home = ({ navigation }: Props) => {
 			<ScrollView>
 				<View
 					style={{
+						top: 64,
 						height: height - 64,
 					}}>
 					<Carousel
@@ -104,7 +105,6 @@ export const Home = ({ navigation }: Props) => {
 										position: 'absolute',
 										fontSize: 36,
 										textAlign: 'center',
-										fontFamily: 'Roboto Condensed',
 										fontWeight: 'bold',
 									}}>
 									{item.label}

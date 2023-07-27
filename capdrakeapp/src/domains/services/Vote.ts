@@ -6,6 +6,10 @@ export namespace VoteService {
 		return axiosInstance.get('/vote-config');
 	};
 
+	export const getTop10 = () => {
+		return axiosInstance.get('/vote/top10');
+	};
+
 	export const getAllUserVotes = (pseudo: string) => {
 		return axiosInstance.get('/vote', {
 			params: {
