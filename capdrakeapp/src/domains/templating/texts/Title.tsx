@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const Title = ({ children, style }: Props) => {
-	return <Text style={[style, styles.label]}>{children}</Text>;
+	return <Text style={[styles.label, style]}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({

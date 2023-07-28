@@ -49,6 +49,8 @@ export const Account = ({ fields, setPassword, setUsername }: Props) => {
 					icon={Images[Files.key]}
 					imageStyle={{ transform: [{ rotate: '45deg' }] }}
 					style={{ color: Color.WHITE }}
+					type='password'
+					secured
 				/>
 			</View>
 		</View>

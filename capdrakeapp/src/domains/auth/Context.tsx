@@ -27,7 +27,8 @@ export const defaultAuthStore: AuthStore = {
 		error: false,
 	},
 	dispatch: () => null,
-	login: (_username: string, _password: string) => Promise.resolve(),
+	login: (_username: string, _password: string, _remember: boolean) =>
+		Promise.resolve(),
 	logout: () => Promise.resolve(),
 	register: (
 		_username: string,
@@ -49,43 +50,49 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList, Routes>>();
 
-	const login = useCallback(async (username: string, password: string) => {
-		dispatch({ type: ActionTypeAuth.LOADING });
-		try {
-			const res = await AuthService.login(username, password);
-			const {
-				data: { bearer, ip },
-			} = res.data;
-			await AsyncStorage.setItem('token', bearer);
-			dispatch({
-				type: ActionTypeAuth.LOGIN,
-				username,
-				token: bearer,
-				ip,
-			});
-			navigation.reset({
-				routes: [{ name: Routes.HOME }],
-			});
-		} catch (error) {
-			console.log(error)
-			if (axios.isAxiosError(error) && error.response) {
-				dispatch({ type: ActionTypeAuth.ERROR });
-				dispatchMessage({
-					type: ActionTypeMessage.ADD_ERROR,
-					code: error.response.data.message,
-					duration: 3000,
+	const login = useCallback(
+		async (username: string, password: string, remember: boolean) => {
+			dispatch({ type: ActionTypeAuth.LOADING });
+			try {
+				const res = await AuthService.login(
+					username,
+					password,
+					remember
+				);
+				const {
+					data: { bearer, ip },
+				} = res.data;
+				await AsyncStorage.setItem('token', bearer);
+				dispatch({
+					type: ActionTypeAuth.LOGIN,
+					username,
+					token: bearer,
+					ip,
 				});
-				return;
-			} else {
-				dispatch({ type: ActionTypeAuth.ERROR });
-				dispatchMessage({
-					type: ActionTypeMessage.ADD_ERROR,
-					code: error as string,
-					duration: 3000,
+				navigation.reset({
+					routes: [{ name: Routes.HOME }],
 				});
+			} catch (error) {
+				if (axios.isAxiosError(error) && error.response) {
+					dispatch({ type: ActionTypeAuth.ERROR });
+					dispatchMessage({
+						type: ActionTypeMessage.ADD_ERROR,
+						code: error.response.data.message,
+						duration: 3000,
+					});
+					return;
+				} else {
+					dispatch({ type: ActionTypeAuth.ERROR });
+					dispatchMessage({
+						type: ActionTypeMessage.ADD_ERROR,
+						code: error as string,
+						duration: 3000,
+					});
+				}
 			}
-		}
-	}, []);
+		},
+		[]
+	);
 
 	const logout = useCallback(async () => {
 		await AsyncStorage.removeItem('token');
@@ -103,7 +110,11 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 			try {
 				await AuthService.register(username, email, password);
 				if (directLogin) {
-					const res = await AuthService.login(username, password);
+					const res = await AuthService.login(
+						username,
+						password,
+						false
+					);
 					const {
 						data: { bearer, ip },
 					} = res.data;

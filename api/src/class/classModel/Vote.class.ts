@@ -1,6 +1,6 @@
 import { Model, Sequelize } from 'sequelize';
 
-import { Vote } from '~/models';
+import { Vote } from '../../models';
 
 class VoteModel {
 	public static async getVote(
@@ -74,7 +74,7 @@ class VoteModel {
 					'total_amount',
 				],
 			],
-			benchmark: true,
+			raw: true,
 		});
 	}
 }

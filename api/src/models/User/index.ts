@@ -1,4 +1,5 @@
 // @ts-ignore
+import * as Password from 'node-php-password';
 import { DataTypes } from 'sequelize';
 
 import { Database } from '../../class/Database.class';
@@ -67,3 +68,13 @@ export const User = sequelize.define(
 		timestamps: false,
 	}
 );
+
+User.beforeCreate(user => {
+	const hashedPassword = Password.hash(user.get('password') as string);
+	user.set('password', hashedPassword);
+});
+
+User.beforeUpdate(user => {
+	const hashedPassword = Password.hash(user.get('password') as string);
+	user.set('password', hashedPassword);
+});

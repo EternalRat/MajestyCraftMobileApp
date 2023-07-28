@@ -1,6 +1,7 @@
-import passportJWT from 'passport-jwt';
-import { User } from './User.class';
 import jwt from 'jsonwebtoken';
+import passportJWT from 'passport-jwt';
+
+import { User } from './User.class';
 
 let JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
@@ -16,7 +17,7 @@ export default class JWT {
 		jwt_payload,
 		next
 	) {
-		console.log('payload received', jwt_payload);
+		console.info('payload received', jwt_payload);
 		let user = new User().getUserById(jwt_payload.id);
 
 		if (user) {
@@ -45,7 +46,6 @@ export default class JWT {
 			});
 			return;
 		}
-		console.log(bearer);
 		jwt.verify(
 			bearer,
 			JWT.jwtOptions.secretOrKey,

@@ -7,10 +7,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DrawerContent } from '../../components/Drawer';
 import { Auth } from '../../views/Auth/Auth';
 import { Home } from '../../views/Home';
+import { TopVotes } from '../../views/TopVoteurs';
 import { Vote } from '../../views/Vote/Vote';
 import { Color } from '../templating/style';
 import { RootStackParamList, Routes } from './routesName';
-import { TopVotes } from '../../views/TopVoteurs';
 
 const Drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -39,12 +39,8 @@ export const MajesticRouter = () => {
 				component={Home}
 				options={{
 					drawerLabel: 'Accueil',
-					drawerIcon: ({ color, size }) => (
-						<Ionicons
-							name='home-outline'
-							size={size}
-							color={color}
-						/>
+					drawerIcon: ({ color }) => (
+						<Ionicons name='home-outline' size={22} color={color} />
 					),
 				}}
 			/>

@@ -100,7 +100,7 @@ export const useVote = () => {
 						}
 					}
 				} catch (err) {
-					console.error(err);
+					console.info(err);
 				}
 			}
 		}, 5000);

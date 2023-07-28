@@ -84,7 +84,7 @@ export const Vote = ({ navigation }: Props) => {
 							width: '70%',
 							alignSelf: 'center',
 						}}>
-						{votesStore.map((vote, index) => {
+						{votesStore.map(vote => {
 							return (
 								<View key={vote.id}>
 									<Button

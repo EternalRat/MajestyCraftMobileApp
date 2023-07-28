@@ -86,7 +86,7 @@ export const Vote = sequelize.define(
 			defaultValue: null,
 		},
 		ip: {
-			type: DataTypes.CHAR(20),
+			type: DataTypes.CHAR(40),
 			allowNull: false,
 			defaultValue: null,
 		},

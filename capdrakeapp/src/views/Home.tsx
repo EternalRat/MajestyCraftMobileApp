@@ -3,12 +3,15 @@ import { DrawerScreenProps } from '@react-navigation/drawer/lib/typescript/src/t
 import { useContext, useEffect } from 'react';
 import {
 	Image,
+	Linking,
 	ScrollView,
 	Text,
+	TouchableOpacity,
 	useWindowDimensions,
 	View,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
@@ -17,6 +20,8 @@ import { ActionTypeAuth, AuthStore } from '../domains/auth/types';
 import { RootStackParamList, Routes } from '../domains/routing/routesName';
 import { AuthService } from '../domains/services/Auth';
 import { Color } from '../domains/templating/style';
+import { Label } from '../domains/templating/texts/Label';
+import { Title } from '../domains/templating/texts/Title';
 
 type Props = DrawerScreenProps<RootStackParamList, Routes.HOME>;
 
@@ -73,48 +78,164 @@ export const Home = ({ navigation }: Props) => {
 	return (
 		<View style={{ flex: 1, backgroundColor: Color.BLACK }}>
 			<Header navigation={navigation} />
-			<ScrollView>
-				<View
-					style={{
-						top: 64,
-						height: height - 64,
+			<View style={{ flex: 1, marginTop: 64 }}>
+				<ScrollView
+					style={{ width }}
+					contentContainerStyle={{
+						marginLeft: 16,
+						marginRight: 16,
+						flexGrow: 1,
 					}}>
-					<Carousel
-						loop
-						width={width}
-						height={200}
-						autoPlay
-						data={carouselData}
-						scrollAnimationDuration={2000}
-						renderItem={({ item }) => (
+					<View>
+						<Carousel
+							loop
+							width={width - 32}
+							height={200}
+							autoPlay
+							data={carouselData}
+							scrollAnimationDuration={2000}
+							renderItem={({ item }) => (
+								<View
+									style={{
+										width: width - 32,
+										height: 200,
+										backgroundColor: 'black',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}>
+									<Image
+										source={{ uri: item.url }}
+										style={{
+											width: width - 32,
+											height: 200,
+										}}
+									/>
+									<Text
+										style={{
+											color: Color.WHITE,
+											position: 'absolute',
+											fontSize: 36,
+											textAlign: 'center',
+											fontWeight: 'bold',
+										}}>
+										{item.label}
+									</Text>
+								</View>
+							)}
+						/>
+						<View style={{ width: '100%', marginTop: 16 }}>
 							<View
 								style={{
-									width,
-									height: 200,
-									backgroundColor: 'black',
+									width: '100%',
 									justifyContent: 'center',
-									alignItems: 'center',
+									gap: 2.5,
+									height: 75,
 								}}>
 								<Image
-									source={{ uri: item.url }}
-									style={{ width, height: 200 }}
+									source={{
+										uri: 'https://majestycraft.com/theme/MajestyTheme/images/background/1.png',
+									}}
+									style={{
+										marginLeft: -16,
+										top: -16,
+										width: width,
+										height: '100%',
+										position: 'absolute',
+									}}
 								/>
-								<Text
+								<Label
+									style={{
+										color: Color.RED,
+										textAlign: 'center',
+										fontSize: 24,
+									}}>
+									BIENVENUE SUR
+								</Label>
+								<Title
 									style={{
 										color: Color.WHITE,
-										position: 'absolute',
-										fontSize: 36,
 										textAlign: 'center',
-										fontWeight: 'bold',
+										fontSize: 32,
 									}}>
-									{item.label}
+									MAJESTYCRAFT
+								</Title>
+							</View>
+							<View style={{ marginTop: 16 }}>
+								<Image
+									source={{
+										uri: 'https://majestycraft.com/theme/upload/panel/2021-05-13-15.46.59.png',
+									}}
+									style={{
+										width: width - 32,
+										height: 200,
+									}}
+								/>
+							</View>
+							<View style={{ marginTop: 16 }}>
+								<Text
+									style={{
+										color: Color.GREY,
+										textAlign: 'center',
+										fontSize: 16,
+										fontWeight: '500',
+									}}>
+									Créé et dirigé par une équipe passionnée, le
+									serveur MajestyCraft vous embarque dans une
+									aventure originale et communautaire à
+									travers son nouveau mode de jeu survie, 100%
+									Farm2Win.
 								</Text>
 							</View>
-						)}
-					/>
-				</View>
-				<Footer />
-			</ScrollView>
+							<View
+								style={{
+									marginTop: 16,
+								}}>
+								<Image
+									source={{
+										uri: 'https://majestycraft.com/theme/upload/panel/hub2.png',
+									}}
+									style={{
+										width: width - 32,
+										height: 200,
+									}}
+								/>
+								<View
+									style={{
+										position: 'absolute',
+										width: '100%',
+										height: 200,
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}>
+									<TouchableOpacity
+										onPress={() => async () => {
+											console.log('test')
+											const supported =
+												await Linking.canOpenURL(
+													'https://www.youtube.com/watch?v=8pcGs5sgEaos'
+												);
+											console.log(supported);
+											if (supported) {
+												await Linking.openURL(
+													'https://www.youtube.com/watch?v=8pcGs5sgEaos'
+												);
+											}
+										}}>
+										<View>
+											<MaterialIcons
+												name='youtube'
+												size={200}
+												color={'red'}
+											/>
+										</View>
+									</TouchableOpacity>
+								</View>
+							</View>
+						</View>
+					</View>
+					<Footer />
+				</ScrollView>
+			</View>
 		</View>
 	);
 };

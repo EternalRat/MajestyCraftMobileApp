@@ -22,7 +22,7 @@ export const Login = ({
 	setPassword,
 	setUsername,
 }: ItemProps) => {
-	const [test, setTest] = useState(false);
+	const [rememberMe, setRememberMe] = useState(false);
 	const { login } = useContext<AuthStore>(AuthContext);
 
 	const viewOffsetY = useSharedValue(-400);
@@ -90,10 +90,10 @@ export const Login = ({
 							paddingTop: 16,
 						}}>
 						<BouncyCheckbox
-							isChecked={test}
+							isChecked={rememberMe}
 							text='Se souvenir de moi'
 							onPress={() => {
-								setTest(!test);
+								setRememberMe(!rememberMe);
 							}}
 							fillColor={Color.ORANGE}
 							disableText={false}
@@ -124,7 +124,11 @@ export const Login = ({
 								borderRadius: 5,
 							}}
 							onClick={() =>
-								login(fields.username, fields.password)
+								login(
+									fields.username,
+									fields.password,
+									rememberMe
+								)
 							}>
 							Se connecter
 						</Button>

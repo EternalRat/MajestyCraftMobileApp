@@ -14,7 +14,11 @@ export interface Auth {
 export interface AuthStore {
 	authStore: Auth;
 	dispatch: Dispatch<Action>;
-	login: (username: string, password: string) => Promise<void>;
+	login: (
+		username: string,
+		password: string,
+		remember: boolean
+	) => Promise<void>;
 	logout: () => Promise<void>;
 	register: (
 		username: string,

@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-import { VoteReward } from '~/models';
+import { VoteReward } from '../../models';
 
 class RewardModel {
 	public static async create(

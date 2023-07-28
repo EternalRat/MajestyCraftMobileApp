@@ -22,36 +22,32 @@ export const TopVotes = ({ navigation }: Props) => {
 					style={{
 						flex: 1,
 						top: 64,
+						marginHorizontal: 24,
+						padding: 8,
 					}}>
 					<View
 						style={{
 							flex: 0.05,
 							display: 'flex',
 							flexDirection: 'row',
+							alignItems: 'center',
 						}}>
-						<View style={{ width: '33%' }}>
+						<View style={{ width: '70%' }}>
 							<Text
 								style={{
 									color: Color.WHITE,
-									textAlign: 'center',
-								}}>
-								#
-							</Text>
-						</View>
-						<View style={{ width: '33%' }}>
-							<Text
-								style={{
-									color: Color.WHITE,
-									textAlign: 'center',
+									fontWeight: '500',
+									fontSize: 18,
 								}}>
 								Pseudo
 							</Text>
 						</View>
-						<View style={{ width: '33%' }}>
+						<View style={{ width: '30%' }}>
 							<Text
 								style={{
 									color: Color.WHITE,
-									textAlign: 'center',
+									fontSize: 18,
+									fontWeight: '500',
 								}}>
 								Votes
 							</Text>
@@ -63,7 +59,7 @@ export const TopVotes = ({ navigation }: Props) => {
 							display: 'flex',
 							flexDirection: 'column',
 						}}>
-						{topVoteurs.map((vote, index) => (
+						{topVoteurs.map(vote => (
 							<View
 								key={vote.pseudo}
 								style={{
@@ -71,29 +67,22 @@ export const TopVotes = ({ navigation }: Props) => {
 									flexDirection: 'row',
 									justifyContent: 'space-around',
 								}}>
-								<View style={{ width: '33%' }}>
+								<View style={{ width: '70%' }}>
 									<Text
 										style={{
 											color: Color.WHITE,
-											textAlign: 'center',
-										}}>
-										{index + 1}
-									</Text>
-								</View>
-								<View style={{ width: '33%' }}>
-									<Text
-										style={{
-											color: Color.WHITE,
-											textAlign: 'center',
+											fontWeight: '500',
+											fontSize: 15,
 										}}>
 										{vote.pseudo}
 									</Text>
 								</View>
-								<View style={{ width: '33%' }}>
+								<View style={{ width: '30%' }}>
 									<Text
 										style={{
 											color: Color.WHITE,
-											textAlign: 'center',
+											fontWeight: '500',
+											fontSize: 15,
 										}}>
 										{vote.total_amount}
 									</Text>

@@ -1,10 +1,15 @@
 import axiosInstance from '../config/Axios';
 
 export namespace AuthService {
-	export const login = (username: string, password: string) => {
+	export const login = (
+		username: string,
+		password: string,
+		stayLoggedIn: boolean
+	) => {
 		return axiosInstance.post('/auth/login', {
 			username,
 			password,
+			stayLoggedIn,
 		});
 	};
 

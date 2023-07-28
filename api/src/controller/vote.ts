@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Vote from '~/class/Vote.class';
+import Vote from '../class/Vote.class';
 
 export namespace VoteController {
 	export const vote = (req: Request, res: Response) => {
