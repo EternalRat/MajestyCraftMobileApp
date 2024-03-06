@@ -1,0 +1,17 @@
+# MajestyCraft Mobile App
+
+Cette application est une application destinée à être utilisé en cohérence avec le site web [Majestycraft](https://majestycraft.com/) permettant de voter/visualiser les votes/acheter sur la boutique pour le serveur minecraft qu'ils possèdent.
+
+# Raison de l'application
+
+L'application a été créée pour permettre aux joueurs de pouvoir se connecter comme il le ferait sur le site et pouvoir voter pour le serveur depuis n'importe où et à n'import quel moment.
+
+L'application reprend donc les fonctionnalités du site, les couleurs du site afin que les joueurs ne soient pas perdus. On peut s'y connecter avec le site crée tout de même au préalable sur le site pour diverses raisons (chiffrage du mot de passe lors de l'envoi à la base de données, le site étant fait en PHP et l'API en nodejs le chiffrage est différent).
+
+Ce projet a pour moi été l'occasion de perfectionner mes connaissances quant aux Context, aux States en React et dans de multiples domaines (dockerization, déploiement sur un serveur, utilisation de plusieurs API, appel asynchrone, etc.).
+
+# Fonctionnalités
+
+- Connexion
+- Voter sur différents sites récupérés depuis le site de Majestycraft
+- Voir les votes
