@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import { DrawerScreenProps } from '@react-navigation/drawer/lib/typescript/src/types';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { useContext, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -17,6 +18,8 @@ import { VotesContext } from '../../domains/Votes/Context';
 import { VotesStore } from '../../domains/Votes/types';
 import { useVote } from './useVote';
 
+dayjs.extend(duration);
+
 type Props = DrawerScreenProps<RootStackParamList, Routes.VOTE>;
 
 interface Timer {
@@ -27,12 +30,14 @@ interface Timer {
 
 export const Vote = ({ navigation }: Props) => {
 	const { votesStore, userVotes } = useContext<VotesStore>(VotesContext);
-	const { handleVote, username, setUsername } = useVote();
+	const { handleVote, username, setUsername, isVoting } = useVote();
 	const [timer, setTimer] = useState<Timer[]>(Array(3));
+	const [timerLoaded, setTimerLoaded] = useState<boolean>(false);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			userVotes.forEach((userVote, index) => {
+			let index = 0;
+			for (const userVote of userVotes) {
 				setTimer(prev => {
 					const state = [...prev];
 					state[index] = {
@@ -52,7 +57,11 @@ export const Vote = ({ navigation }: Props) => {
 					};
 					return state;
 				});
-			});
+				index++;
+			}
+			if (!timerLoaded) {
+				setTimerLoaded(true);
+			}
 		}, 1000);
 		return () => clearInterval(interval);
 	}, [userVotes, votesStore]);
@@ -68,7 +77,9 @@ export const Vote = ({ navigation }: Props) => {
 						alignSelf: 'center',
 						bottom: 24,
 					}}>
-					<Label style={{ color: Color.WHITE }}>Pseudo</Label>
+					<Label style={{ color: Color.WHITE }}>
+						Pseudo IN GAME (EXACT)
+					</Label>
 					<Input
 						value={username}
 						updateText={e => setUsername(e.nativeEvent.text)}
@@ -84,63 +95,90 @@ export const Vote = ({ navigation }: Props) => {
 							width: '70%',
 							alignSelf: 'center',
 						}}>
-						{votesStore.map(vote => {
-							return (
-								<View key={vote.id}>
-									<Button
-										disabled={
-											timer.find(
+						{timerLoaded ? (
+							votesStore.map(vote => {
+								return (
+									<View key={vote.id}>
+										<Button
+											disabled={
+												(timer.find(
+													time =>
+														time &&
+														time.id === vote.id
+												) &&
+												timer.find(
+													time => time.id === vote.id
+												)!.active
+													? true
+													: username.length === 0) ||
+												isVoting.find(
+													currentVote =>
+														currentVote.linkId ===
+														vote.id
+												) !== undefined
+											}
+											style={{
+												width: '100%',
+												backgroundColor:
+													(timer.find(
+														time =>
+															time &&
+															time.id === vote.id
+													) &&
+														timer.find(
+															time =>
+																time.id ===
+																vote.id
+														)!.active) ||
+													username.length === 0
+														? Color.BORDER
+														: Color.ORANGE ||
+														  isVoting.find(
+																currentVote =>
+																	currentVote.linkId ===
+																	vote.id
+														  ) !== undefined,
+												height: 40,
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+												borderRadius: 5,
+											}}
+											onClick={handleVote(vote)}>
+											{timer.find(
 												time =>
 													time && time.id === vote.id
 											) &&
 											timer.find(
 												time => time.id === vote.id
 											)!.active
-												? true
-												: username.length === 0
-										}
-										style={{
-											width: '100%',
-											backgroundColor:
-												(timer.find(
-													time =>
-														time &&
-														time.id === vote.id
-												) &&
-													timer.find(
-														time =>
-															time.id === vote.id
-													)!.active) ||
-												username.length === 0
-													? Color.BORDER
-													: Color.ORANGE,
-											height: 40,
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											borderRadius: 5,
-										}}
-										onClick={handleVote(vote)}>
-										{timer.find(
-											time => time && time.id === vote.id
-										) &&
-										timer.find(time => time.id === vote.id)!
-											.active
-											? `Vous pourrez revoter dans ${moment()
-													.startOf('day')
-													.seconds(
-														timer.find(
-															time =>
-																time.id ===
-																vote.id
-														)!.timer
-													)
-													.format('HH:MM:ss')}`
-											: vote.title}
-									</Button>
-								</View>
-							);
-						})}
+												? `Vous pourrez revoter dans ${dayjs
+														.duration(
+															timer.find(
+																time =>
+																	time &&
+																	time.id ===
+																		vote.id
+															)!.timer,
+															'seconds'
+														)
+														.format('HH:mm:ss')}`
+												: vote.title}
+										</Button>
+									</View>
+								);
+							})
+						) : (
+							<View style={{ flex: 1, justifyContent: 'center' }}>
+								<Label
+									style={{
+										color: Color.WHITE,
+										textAlign: 'center',
+									}}>
+									Récupération des données en cours...
+								</Label>
+							</View>
+						)}
 					</View>
 				) : (
 					<View style={{ flex: 1, justifyContent: 'center' }}>

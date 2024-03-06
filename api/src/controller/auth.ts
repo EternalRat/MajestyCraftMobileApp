@@ -40,7 +40,6 @@ export namespace AuthController {
 						data: {
 							user: user.toJSON(),
 							bearer: token,
-							ip: req.headers['cf-connecting-ip'] as string,
 						},
 					});
 				} else {
@@ -132,7 +131,6 @@ export namespace AuthController {
 			message: 'You are logged in',
 			data: {
 				username: (req.user as any).username,
-				ip: req.headers['cf-connecting-ip'] as string,
 			},
 		});
 	};

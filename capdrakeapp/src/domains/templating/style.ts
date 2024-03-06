@@ -7,6 +7,9 @@ export enum Color {
 	ORANGE = '#FF8300',
 	GREY = '#e9ecef',
 	BORDER = '#ced4da',
+	FIRST_PLACE = '#FFD700',
+	SECOND_PLACE = '#C0C0C0',
+	THIRD_PLACE = '#CD7F32',
 }
 
 export const loadingColor = '#AAABB5';

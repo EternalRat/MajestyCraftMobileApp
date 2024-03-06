@@ -44,6 +44,12 @@ export const Images: FilesInfos = {
 		android: { type: AndroidFileType.Vector },
 		ios: { type: IosFileType.Pdf },
 	},
+	[Files.trophy]: {
+		path: './files/trophy.svg',
+		source: { uri: 'trophy' },
+		android: { type: AndroidFileType.Vector },
+		ios: { type: IosFileType.Pdf },
+	},
 };
 
 export default Images;

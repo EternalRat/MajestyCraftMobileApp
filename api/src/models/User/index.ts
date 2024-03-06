@@ -69,12 +69,12 @@ export const User = sequelize.define(
 	}
 );
 
-User.beforeCreate(user => {
-	const hashedPassword = Password.hash(user.get('password') as string);
-	user.set('password', hashedPassword);
-});
+// User.beforeCreate(user => {
+// 	const hashedPassword = Password.hash(user.get('password') as string);
+// 	user.set('password', hashedPassword);
+// });
 
-User.beforeUpdate(user => {
-	const hashedPassword = Password.hash(user.get('password') as string);
-	user.set('password', hashedPassword);
-});
+// User.beforeUpdate(user => {
+// 	const hashedPassword = Password.hash(user.get('password') as string);
+// 	user.set('password', hashedPassword);
+// });

@@ -3,6 +3,8 @@ export enum Routes {
 	AUTH = 'Auth',
 	VOTE = 'Vote',
 	TOPVOTE = 'TopVote',
+	VOTESITE = 'VoteSite',
+	VIDEOVIEW = 'VideoView',
 }
 
 export type RootStackParamList = {
@@ -10,4 +12,8 @@ export type RootStackParamList = {
 	[Routes.AUTH]: undefined;
 	[Routes.VOTE]: undefined;
 	[Routes.TOPVOTE]: undefined;
+	[Routes.VOTESITE]: {
+		voteUrl: string;
+	};
+	[Routes.VIDEOVIEW]: undefined;
 };

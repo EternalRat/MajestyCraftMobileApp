@@ -1,4 +1,4 @@
-import { HasVoted } from '../../views/Vote/useVote';
+import { Votes } from '../../views/Vote/useVote';
 import axiosInstance from '../config/Axios';
 
 export namespace VoteService {
@@ -50,10 +50,7 @@ export namespace VoteService {
 		});
 	};
 
-	export const stockVote = (
-		{ action, serveur }: HasVoted,
-		pseudo: string
-	) => {
+	export const stockVote = ({ action, serveur }: Votes, pseudo: string) => {
 		const action1 = JSON.parse(action),
 			action2 = JSON.parse(action),
 			inst = [];

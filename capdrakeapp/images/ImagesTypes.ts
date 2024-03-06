@@ -7,6 +7,7 @@ export enum Files {
 	email,
 	majestycraft,
 	hamburger,
+	trophy,
 }
 
 export type FilesInfos = {

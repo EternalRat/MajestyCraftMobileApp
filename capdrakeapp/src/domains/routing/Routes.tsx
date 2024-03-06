@@ -9,6 +9,8 @@ import { Auth } from '../../views/Auth/Auth';
 import { Home } from '../../views/Home';
 import { TopVotes } from '../../views/TopVoteurs';
 import { Vote } from '../../views/Vote/Vote';
+import { VideoWebView } from '../../views/WebView/Video';
+import { VoteWebView } from '../../views/WebView/VoteView';
 import { Color } from '../templating/style';
 import { RootStackParamList, Routes } from './routesName';
 
@@ -70,6 +72,24 @@ export const MajesticRouter = () => {
 					drawerIcon: ({ color }) => (
 						<MaterialIcons name='vote' size={22} color={color} />
 					),
+				}}
+			/>
+			<Drawer.Screen
+				name={Routes.VIDEOVIEW}
+				component={VideoWebView}
+				options={{
+					drawerItemStyle: {
+						display: 'none',
+					},
+				}}
+			/>
+			<Drawer.Screen
+				name={Routes.VOTESITE}
+				component={VoteWebView}
+				options={{
+					drawerItemStyle: {
+						display: 'none',
+					},
 				}}
 			/>
 		</Drawer.Navigator>

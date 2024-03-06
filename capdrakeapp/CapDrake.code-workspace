@@ -17,8 +17,8 @@
 		"editor.formatOnSave": true,
 		"editor.formatOnPaste": true,
 		"editor.formatOnType": true,
-		"prettier.configPath": "../capdrakeapp/.prettierrc",
-		"prettier.prettierPath": "../capdrakeapp/node_modules/prettier/",
+		"prettier.configPath": "./.prettierrc",
+		"prettier.prettierPath": "./node_modules/prettier",
 		"vscord.app.name": "Visual Studio Code",
 		"terminal.external.osxExec": "iTerm.app",
 		"terminal.integrated.defaultProfile.osx": "zsh",
@@ -34,10 +34,20 @@
 		"[javascript]": {
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		},
+		"eslint.enable": true,
+		"eslint.validate": [
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact"
+		],
 		"eslint.workingDirectories": [
 			"../capdrakeapp/",
 			"../api/"
 		],
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
 		"svg.preview.background": "transparent",
 	}
 }

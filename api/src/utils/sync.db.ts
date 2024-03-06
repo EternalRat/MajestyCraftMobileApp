@@ -2,15 +2,15 @@ import { User, Vote, VoteConfigs, VoteReward } from '../models';
 
 export const sync = () => {
 	User.sync().then(() => {
-		console.info('User table created');
+		console.info('User table initialized');
 	});
 	Vote.sync().then(() => {
-		console.info('Vote table created');
+		console.info('Vote table initialized');
 	});
 	VoteConfigs.sync().then(() => {
-		console.info('VoteConfigs table created');
+		console.info('VoteConfigs table initialized');
 	});
 	VoteReward.sync().then(() => {
-		console.info('VoteReward table created');
+		console.info('VoteReward table initialized');
 	});
 };

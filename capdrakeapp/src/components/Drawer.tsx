@@ -1,12 +1,13 @@
 import {
 	DrawerContentComponentProps,
 	DrawerContentScrollView,
-	DrawerItemList,
+	DrawerItem,
 } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useContext } from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AuthContext } from '../domains/auth/Context';
@@ -37,7 +38,66 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 						flex: 1,
 						paddingTop: 10,
 					}}>
-					<DrawerItemList {...props} />
+					<DrawerItem
+						label={'Accueil'}
+						onPress={() => {
+							props.navigation.reset({
+								routes: [{ name: Routes.HOME }],
+							});
+						}}
+						focused={props.state.index === 0}
+						activeBackgroundColor={Color.ORANGE}
+						activeTintColor='#333'
+						inactiveTintColor={Color.WHITE}
+						labelStyle={{ fontSize: 15, marginLeft: -25 }}
+						icon={({ color }) => (
+							<Ionicons
+								name='home-outline'
+								size={22}
+								color={color}
+							/>
+						)}
+					/>
+					<DrawerItem
+						label={'Vote'}
+						onPress={() => {
+							props.navigation.reset({
+								routes: [{ name: Routes.VOTE }],
+							});
+						}}
+						focused={props.state.index === 2}
+						activeBackgroundColor={Color.ORANGE}
+						activeTintColor='#333'
+						inactiveTintColor={Color.WHITE}
+						labelStyle={{ fontSize: 15, marginLeft: -25 }}
+						icon={({ color }) => (
+							<MaterialIcons
+								name='vote'
+								size={22}
+								color={color}
+							/>
+						)}
+					/>
+					<DrawerItem
+						label={'Top Voteurs'}
+						onPress={() => {
+							props.navigation.reset({
+								routes: [{ name: Routes.TOPVOTE }],
+							});
+						}}
+						focused={props.state.index === 3}
+						activeBackgroundColor={Color.ORANGE}
+						activeTintColor='#333'
+						inactiveTintColor={Color.WHITE}
+						labelStyle={{ fontSize: 15, marginLeft: -25 }}
+						icon={({ color }) => (
+							<MaterialIcons
+								name='vote'
+								size={22}
+								color={color}
+							/>
+						)}
+					/>
 				</View>
 			</DrawerContentScrollView>
 			<View

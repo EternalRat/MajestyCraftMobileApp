@@ -60,8 +60,11 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 					remember
 				);
 				const {
-					data: { bearer, ip },
+					data: { bearer },
 				} = res.data;
+				const {
+					data: { ip },
+				} = await axios.get('https://api.ipify.org?format=json');
 				await AsyncStorage.setItem('token', bearer);
 				dispatch({
 					type: ActionTypeAuth.LOGIN,
@@ -116,8 +119,11 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 						false
 					);
 					const {
-						data: { bearer, ip },
+						data: { bearer },
 					} = res.data;
+					const {
+						data: { ip },
+					} = await axios.get('https://api.ipify.org?format=json');
 					await AsyncStorage.setItem('token', bearer);
 					dispatch({
 						type: ActionTypeAuth.LOGIN,

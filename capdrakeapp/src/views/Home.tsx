@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrawerScreenProps } from '@react-navigation/drawer/lib/typescript/src/types';
+import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import {
 	Image,
-	Linking,
 	ScrollView,
 	Text,
 	TouchableOpacity,
@@ -42,7 +42,7 @@ const carouselData = [
 
 export const Home = ({ navigation }: Props) => {
 	const { dispatch, logout } = useContext<AuthStore>(AuthContext);
-	const { width, height } = useWindowDimensions();
+	const { width } = useWindowDimensions();
 
 	useEffect(() => {
 		AsyncStorage.getItem('token').then(token => {
@@ -57,8 +57,13 @@ export const Home = ({ navigation }: Props) => {
 				.then(async res => {
 					if (res.status === 200) {
 						const {
-							data: { username, ip },
+							data: { username },
 						} = res.data;
+						const {
+							data: { ip },
+						} = await axios.get(
+							'https://api.ipify.org?format=json'
+						);
 						dispatch({
 							type: ActionTypeAuth.LOGIN,
 							username,
@@ -208,18 +213,10 @@ export const Home = ({ navigation }: Props) => {
 										alignItems: 'center',
 									}}>
 									<TouchableOpacity
-										onPress={() => async () => {
-											console.log('test')
-											const supported =
-												await Linking.canOpenURL(
-													'https://www.youtube.com/watch?v=8pcGs5sgEaos'
-												);
-											console.log(supported);
-											if (supported) {
-												await Linking.openURL(
-													'https://www.youtube.com/watch?v=8pcGs5sgEaos'
-												);
-											}
+										onPress={() => {
+											navigation.navigate(
+												Routes.VIDEOVIEW
+											);
 										}}>
 										<View>
 											<MaterialIcons
